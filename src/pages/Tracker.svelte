@@ -132,12 +132,12 @@
   {/if}
 
   <!-- Tab Navigation -->
-  <div class="border-b border-zen-gray-200">
+  <div class="border-b border-gray-200">
     <nav class="flex space-x-8">
       <button
         class="py-2 px-1 border-b-2 font-medium text-sm {activeTab === 'today' 
           ? 'border-blue-500 text-blue-600' 
-          : 'border-transparent text-zen-gray-500 hover:text-zen-gray-700'}"
+          : 'border-transparent text-gray-500 hover:text-gray-700'}"
         on:click={() => activeTab = 'today'}
       >
         Today
@@ -145,7 +145,7 @@
       <button
         class="py-2 px-1 border-b-2 font-medium text-sm {activeTab === 'history' 
           ? 'border-blue-500 text-blue-600' 
-          : 'border-transparent text-zen-gray-500 hover:text-zen-gray-700'}"
+          : 'border-transparent text-gray-500 hover:text-gray-700'}"
         on:click={() => activeTab = 'history'}
       >
         History
@@ -153,7 +153,7 @@
       <button
         class="py-2 px-1 border-b-2 font-medium text-sm {activeTab === 'analytics' 
           ? 'border-blue-500 text-blue-600' 
-          : 'border-transparent text-zen-gray-500 hover:text-zen-gray-700'}"
+          : 'border-transparent text-gray-500 hover:text-gray-700'}"
         on:click={() => activeTab = 'analytics'}
       >
         Analytics
@@ -161,7 +161,7 @@
       <button
         class="py-2 px-1 border-b-2 font-medium text-sm {activeTab === 'achievements' 
           ? 'border-blue-500 text-blue-600' 
-          : 'border-transparent text-zen-gray-500 hover:text-zen-gray-700'}"
+          : 'border-transparent text-gray-500 hover:text-gray-700'}"
         on:click={() => activeTab = 'achievements'}
       >
         Achievements
@@ -235,7 +235,7 @@
       <!-- Left Column - Goals & Progress -->
       <div class="lg:col-span-2 space-y-6">
         <!-- Goals Section -->
-        <div class="bg-white rounded-xl border border-zen-gray-200 p-6 shadow-sm">
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
           <GoalInput
             goals={$trackerStore.todaysGoals}
             completedGoals={$trackerStore.completedGoals}
@@ -248,8 +248,8 @@
 
         <!-- Roadmap Progress -->
         {#if $trackerStore.todaysLog?.roadmap_progress && Object.keys($trackerStore.todaysLog.roadmap_progress).length > 0}
-          <div class="bg-white rounded-xl border border-zen-gray-200 p-6 shadow-sm">
-            <h3 class="text-lg font-semibold text-zen-gray-800 mb-4 flex items-center gap-2">
+          <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
               <span class="text-xl">🗺️</span>
               Today's Roadmap Progress
             </h3>
@@ -290,15 +290,15 @@
         {/if}
         
         <!-- Reflection Section -->
-        <div class="bg-white rounded-xl border border-zen-gray-200 p-6 shadow-sm">
-          <h3 class="text-lg font-semibold text-zen-gray-800 mb-4 flex items-center gap-2">
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
             <span class="text-xl">💭</span>
             Daily Reflection
           </h3>
           
           <div class="space-y-4">
             <div>
-              <label for="key-learning" class="block text-sm font-medium text-zen-gray-700 mb-2">
+              <label for="key-learning" class="block text-sm font-medium text-gray-700 mb-2">
                 Key Learning Today
               </label>
               <input
@@ -306,12 +306,12 @@
                 bind:value={keyLearning}
                 on:input={handleReflectionChange}
                 placeholder="What's the most important thing you learned today?"
-                class="w-full px-4 py-3 border border-zen-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               />
             </div>
             
             <div>
-              <label for="reflection" class="block text-sm font-medium text-zen-gray-700 mb-2">
+              <label for="reflection" class="block text-sm font-medium text-gray-700 mb-2">
                 Reflection
               </label>
               <textarea
@@ -320,7 +320,7 @@
                 on:input={handleReflectionChange}
                 rows="4"
                 placeholder="How did your learning go today? Any challenges or breakthroughs?"
-                class="w-full px-4 py-3 border border-zen-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all"
               ></textarea>
             </div>
           </div>
@@ -330,8 +330,8 @@
       <!-- Right Column - Mood & Energy -->
       <div class="space-y-6">
         <!-- Mood & Energy Tracker -->
-        <div class="bg-white rounded-xl border border-zen-gray-200 p-6 shadow-sm">
-          <h3 class="text-lg font-semibold text-zen-gray-800 mb-4 flex items-center gap-2">
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
             <span class="text-xl">😊</span>
             How are you doing?
           </h3>
@@ -357,11 +357,11 @@
       />
       
       <!-- Recent Activity -->
-      <div class="bg-white rounded-lg border border-zen-gray-200 p-6">
-        <h3 class="text-lg font-semibold text-zen-gray-800 mb-4">Recent Activity</h3>
+      <div class="bg-white rounded-lg border border-gray-200 p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h3>
         
         {#if $trackerStore.recentLogs.length === 0}
-          <div class="text-center py-8 text-zen-gray-500">
+          <div class="text-center py-8 text-gray-500">
             <div class="text-4xl mb-2">📝</div>
             <p>No recent activity</p>
             <p class="text-sm mt-1">Start logging your learning to see your history!</p>
@@ -369,7 +369,7 @@
         {:else}
           <div class="space-y-3">
             {#each $trackerStore.recentLogs.slice(0, 10) as log}
-              <div class="flex items-center justify-between p-3 bg-zen-gray-50 rounded-lg">
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
                   <div class="font-medium text-sm">
                     {new Date(log.date).toLocaleDateString('en-US', { 
@@ -378,7 +378,7 @@
                       day: 'numeric' 
                     })}
                   </div>
-                  <div class="text-xs text-zen-gray-600">
+                  <div class="text-xs text-gray-600">
                     {log.completed_goals?.length || 0}/{log.goals?.length || 0} goals •
                     {log.learning_minutes || 0}m learning •
                     {log.focus_sessions || 0} sessions
@@ -394,7 +394,7 @@
                     </div>
                   {/if}
                   {#if log.energy_level}
-                    <div class="text-xs text-zen-gray-500">
+                    <div class="text-xs text-gray-500">
                       Energy: {log.energy_level}/5
                     </div>
                   {/if}
@@ -415,7 +415,7 @@
   {:else if activeTab === 'achievements'}
     <div class="space-y-6">
       {#if $trackerStore.achievements.length === 0}
-        <div class="text-center py-12 text-zen-gray-500">
+        <div class="text-center py-12 text-gray-500">
           <div class="text-6xl mb-4">🏆</div>
           <h3 class="text-xl font-semibold mb-2">No achievements yet</h3>
           <p>Keep learning and tracking your progress to unlock achievements!</p>
@@ -444,7 +444,7 @@
     <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
       <div class="text-center">
         <div class="text-4xl mb-4">🎉</div>
-        <h3 class="text-xl font-semibold text-zen-gray-800 mb-4">New Achievement Unlocked!</h3>
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">New Achievement Unlocked!</h3>
         
         {#each $trackerStore.newAchievements as achievement}
           <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-4 mb-4">

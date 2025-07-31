@@ -71,20 +71,20 @@
   <!-- Progress Header -->
   <div class="mb-6">
     <div class="flex items-center justify-between mb-2">
-      <h3 class="text-lg font-semibold text-zen-gray-800">Today's Goals</h3>
-      <div class="text-sm text-zen-gray-600">
+      <h3 class="text-lg font-semibold text-gray-800">Today's Goals</h3>
+      <div class="text-sm text-gray-600">
         {cleanCompletedGoals.length} of {goals.length} completed
       </div>
     </div>
     
     {#if goals.length > 0}
-      <div class="w-full bg-zen-gray-200 rounded-full h-2">
+      <div class="w-full bg-gray-200 rounded-full h-2">
         <div 
           class="bg-gradient-to-r from-green-400 to-green-500 h-2 rounded-full transition-all duration-300"
           style="width: {completionRate}%"
         ></div>
       </div>
-      <div class="text-xs text-zen-gray-500 mt-1">{Math.round(completionRate)}% complete</div>
+      <div class="text-xs text-gray-500 mt-1">{Math.round(completionRate)}% complete</div>
     {/if}
   </div>
 
@@ -96,7 +96,7 @@
         on:keydown={handleKeydown}
         placeholder="Add a learning goal for today..."
         disabled={loading}
-        class="flex-1 px-4 py-2 border border-zen-gray-300 rounded-lg
+        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg
                focus:outline-none focus:ring-2 focus:ring-blue-500
                disabled:opacity-50 disabled:cursor-not-allowed"
       />
@@ -113,7 +113,7 @@
         Add
       </button>
     </div>
-    <div class="text-xs text-zen-gray-500 mt-1">
+    <div class="text-xs text-gray-500 mt-1">
       Press Enter to add • Be specific and actionable
     </div>
   </div>
@@ -121,14 +121,14 @@
   <!-- Goals List -->
   <div class="space-y-2">
     {#each goals as goal, index}
-      <div class="goal-item group flex items-start gap-3 p-3 bg-white border border-zen-gray-200 rounded-lg hover:border-zen-gray-300 transition-colors">
+      <div class="goal-item group flex items-start gap-3 p-3 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
         <!-- Checkbox -->
         <button
           on:click={() => toggleGoal(goal)}
           class="flex-shrink-0 w-6 h-6 mt-0.5 rounded-full border-2 flex items-center justify-center transition-colors
                  {cleanCompletedGoals.includes(goal) 
                    ? 'bg-green-500 border-green-500 text-white' 
-                   : 'border-zen-gray-300 hover:border-green-400'}"
+                   : 'border-gray-300 hover:border-green-400'}"
         >
           {#if cleanCompletedGoals.includes(goal)}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -149,7 +149,7 @@
             />
           {:else}
             <div 
-              class="break-words hyphens-auto leading-relaxed {cleanCompletedGoals.includes(goal) ? 'line-through text-zen-gray-500' : 'text-zen-gray-800'}"
+              class="break-words hyphens-auto leading-relaxed {cleanCompletedGoals.includes(goal) ? 'line-through text-gray-500' : 'text-gray-800'}"
               title={goal}
             >
               {goal}
@@ -171,7 +171,7 @@
             </button>
             <button
               on:click={cancelEdit}
-              class="p-1 text-zen-gray-400 hover:bg-zen-gray-50 rounded"
+              class="p-1 text-gray-400 hover:bg-gray-50 rounded"
               title="Cancel"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,7 +181,7 @@
           {:else}
             <button
               on:click={() => startEditing(index, goal)}
-              class="p-1 text-zen-gray-400 hover:bg-zen-gray-50 rounded"
+              class="p-1 text-gray-400 hover:bg-gray-50 rounded"
               title="Edit goal"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -203,7 +203,7 @@
     {/each}
 
     {#if goals.length === 0}
-      <div class="text-center py-8 text-zen-gray-500">
+      <div class="text-center py-8 text-gray-500">
         <div class="text-4xl mb-2">🎯</div>
         <p class="text-sm">No goals set for today</p>
         <p class="text-xs mt-1">Add your first learning goal to get started!</p>

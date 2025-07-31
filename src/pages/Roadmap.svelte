@@ -301,10 +301,10 @@
   {#if $roadmapStore.loading}
     <!-- Loading State -->
     <div class="space-y-4">
-      <div class="h-8 w-48 bg-zen-gray-200 rounded animate-pulse"></div>
+      <div class="h-8 w-48 bg-gray-200 rounded animate-pulse"></div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {#each Array(4) as _}
-          <div class="h-48 bg-zen-gray-200 rounded-lg animate-pulse"></div>
+          <div class="h-48 bg-gray-200 rounded-lg animate-pulse"></div>
         {/each}
       </div>
     </div>
@@ -329,7 +329,7 @@
     <!-- Roadmap Selection View -->
     <div>
       <h1 class="text-2xl font-semibold">AI/ML Learning Roadmaps</h1>
-      <p class="text-zen-gray-600 mt-1">
+      <p class="text-gray-600 mt-1">
         Select a structured learning path to master AI/ML concepts
       </p>
     </div>
@@ -341,19 +341,19 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div class="text-center">
             <div class="text-2xl font-bold text-blue-600">{statistics.roadmapsStarted}</div>
-            <div class="text-sm text-zen-gray-600">Started</div>
+            <div class="text-sm text-gray-600">Started</div>
           </div>
           <div class="text-center">
             <div class="text-2xl font-bold text-green-600">{statistics.roadmapsCompleted}</div>
-            <div class="text-sm text-zen-gray-600">Completed</div>
+            <div class="text-sm text-gray-600">Completed</div>
           </div>
           <div class="text-center">
             <div class="text-2xl font-bold text-purple-600">{statistics.totalStagesCompleted}</div>
-            <div class="text-sm text-zen-gray-600">Stages Done</div>
+            <div class="text-sm text-gray-600">Stages Done</div>
           </div>
           <div class="text-center">
             <div class="text-2xl font-bold text-orange-600">{Math.round(statistics.averageCompletion)}%</div>
-            <div class="text-sm text-zen-gray-600">Avg Progress</div>
+            <div class="text-sm text-gray-600">Avg Progress</div>
           </div>
         </div>
       </div>
@@ -367,13 +367,13 @@
             type="text"
             bind:value={searchTerm}
             placeholder="Search roadmaps by name, description, or tags..."
-            class="w-full px-4 py-2 border border-zen-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
         <div class="sm:w-48">
           <select 
             bind:value={filterDifficulty}
-            class="w-full px-3 py-2 border border-zen-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             {#each difficulties as difficulty}
               <option value={difficulty}>
@@ -389,7 +389,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {#if filteredRoadmaps.length === 0}
         <div class="col-span-full card-zen text-center py-8">
-          <p class="text-zen-gray-500 text-sm">No roadmaps match your search criteria.</p>
+          <p class="text-gray-500 text-sm">No roadmaps match your search criteria.</p>
         </div>
       {:else}
         {#each filteredRoadmaps as roadmap}
@@ -402,8 +402,8 @@
               <div class="flex items-center gap-3">
                 <span class="text-3xl">{roadmap.icon}</span>
                 <div>
-                  <h3 class="font-semibold text-lg text-zen-gray-800">{roadmap.name}</h3>
-                  <p class="text-sm text-zen-gray-600 mt-1">
+                  <h3 class="font-semibold text-lg text-gray-800">{roadmap.name}</h3>
+                  <p class="text-sm text-gray-600 mt-1">
                     {roadmap.stages?.length || 0} stages • ~{roadmap.estimated_hours}h
                   </p>
                 </div>
@@ -419,7 +419,7 @@
               {/if}
             </div>
             
-            <p class="text-sm text-zen-gray-600 mb-4 line-clamp-2">
+            <p class="text-sm text-gray-600 mb-4 line-clamp-2">
               {roadmap.description}
             </p>
             
@@ -432,7 +432,7 @@
                 {#if roadmap.tags && roadmap.tags.length > 0}
                   <div class="flex flex-wrap gap-1">
                     {#each roadmap.tags.slice(0, 3) as tag}
-                      <span class="text-xs text-zen-gray-500 bg-zen-gray-100 px-2 py-0.5 rounded">
+                      <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
                         {tag}
                       </span>
                     {/each}
@@ -443,22 +443,22 @@
               <!-- Progress Bar -->
               {#if roadmapProgress.completed_stages > 0}
                 <div>
-                  <div class="flex justify-between text-xs text-zen-gray-600 mb-1">
+                  <div class="flex justify-between text-xs text-gray-600 mb-1">
                     <span>Progress</span>
                     <span>{roadmapProgress.percentage}%</span>
                   </div>
-                  <div class="w-full bg-zen-gray-200 rounded-full h-2 overflow-hidden">
+                  <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
                     <div 
                       class="h-full rounded-full transition-all duration-500 ease-out {roadmapProgress.percentage === 100 ? 'bg-green-500' : 'bg-blue-500'}"
                       style="width: {roadmapProgress.percentage}%"
                     />
                   </div>
-                  <p class="text-xs text-zen-gray-500 mt-1">
+                  <p class="text-xs text-gray-500 mt-1">
                     {roadmapProgress.completed_stages} of {roadmapProgress.total_stages} stages completed
                   </p>
                 </div>
               {:else}
-                <p class="text-xs text-zen-gray-500">
+                <p class="text-xs text-gray-500">
                   Ready to start • {roadmap.stages?.length || 0} stages to master
                 </p>
               {/if}
@@ -476,7 +476,7 @@
         <div class="flex items-center gap-3">
           <button
             on:click={() => selectedView = 'overview'}
-            class="p-2 hover:bg-zen-gray-100 rounded-lg transition-colors"
+            class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             title="Back to roadmaps"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -488,7 +488,7 @@
               <span>{$roadmapStore.selectedRoadmap.icon}</span>
               {$roadmapStore.selectedRoadmap.name}
             </h1>
-            <p class="text-zen-gray-600 text-sm">
+            <p class="text-gray-600 text-sm">
               {$roadmapStore.selectedRoadmap.description}
             </p>
           </div>
@@ -512,12 +512,12 @@
           {#if $currentProgress}
             <div class="card-zen bg-gradient-to-r from-blue-50 to-green-50 border-blue-200">
               <div class="flex items-center justify-between mb-3">
-                <h2 class="font-semibold text-zen-gray-800">Progress Overview</h2>
-                <span class="text-sm text-zen-gray-600">
+                <h2 class="font-semibold text-gray-800">Progress Overview</h2>
+                <span class="text-sm text-gray-600">
                   <span>{$currentProgress?.completed_stages || 0}/{$currentProgress?.total_stages || 0} stages ({$currentProgress?.percentage || 0}%)</span>
                 </span>
               </div>
-              <div class="w-full bg-zen-gray-200 rounded-full h-3">
+              <div class="w-full bg-gray-200 rounded-full h-3">
                 <div 
                   class="bg-gradient-to-r from-blue-500 to-green-500 h-3 rounded-full transition-all duration-500"
                   style="width: {$currentProgress?.percentage || 0}%"
@@ -549,7 +549,7 @@
 
           <!-- Stages -->
           <div class="space-y-4">
-            <h3 class="font-semibold text-zen-gray-700">Learning Stages</h3>
+            <h3 class="font-semibold text-gray-700">Learning Stages</h3>
             
             {#each $roadmapStore.selectedRoadmap.stages as stage, index}
               {@const stageProgress = getCurrentStageProgress(index)}
@@ -569,15 +569,15 @@
                     <!-- Stage Title and Info -->
                     <div class="flex items-start justify-between mb-2">
                       <div class="flex-1">
-                        <h4 class="font-medium text-zen-gray-900 flex items-center gap-2">
+                        <h4 class="font-medium text-gray-900 flex items-center gap-2">
                           <span>{index + 1}. {stage.title}</span>
                           {#if stageProgress.hasNote}
                             <span class="text-blue-500" title="Has notes">📝</span>
                           {/if}
                         </h4>
-                        <p class="text-sm text-zen-gray-600 mt-1">{stage.description}</p>
+                        <p class="text-sm text-gray-600 mt-1">{stage.description}</p>
                         {#if stage.estimatedTime}
-                          <p class="text-xs text-zen-gray-500 mt-2">
+                          <p class="text-xs text-gray-500 mt-2">
                             ⏱️ Estimated time: {formatEstimatedTime(stage.estimatedTime)}
                           </p>
                         {/if}
@@ -586,7 +586,7 @@
                       <div class="flex items-center gap-2 ml-4">
                         <button
                           on:click={() => openNoteModal(stage.id)}
-                          class="p-1 text-zen-gray-400 hover:text-blue-600 transition-colors"
+                          class="p-1 text-gray-400 hover:text-blue-600 transition-colors"
                           title="Add note"
                         >
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -596,7 +596,7 @@
                         
                         <button
                           on:click={() => toggleStageExpansion(index)}
-                          class="p-1 text-zen-gray-400 hover:text-zen-gray-600 transition-colors"
+                          class="p-1 text-gray-400 hover:text-gray-600 transition-colors"
                         >
                           <svg 
                             class="w-4 h-4 transform transition-transform {expandedStages.has(index) ? 'rotate-180' : ''}" 
@@ -616,10 +616,10 @@
                         <!-- Learning Objectives -->
                         {#if stage.learningObjectives && stage.learningObjectives.length > 0}
                           <div>
-                            <h5 class="font-medium text-sm text-zen-gray-700 mb-2">Learning Objectives:</h5>
+                            <h5 class="font-medium text-sm text-gray-700 mb-2">Learning Objectives:</h5>
                             <ul class="space-y-1">
                               {#each stage.learningObjectives as objective}
-                                <li class="flex items-start gap-2 text-sm text-zen-gray-600">
+                                <li class="flex items-start gap-2 text-sm text-gray-600">
                                   <span class="text-blue-500 mt-0.5">•</span>
                                   <span>{objective}</span>
                                 </li>
@@ -631,14 +631,14 @@
                         <!-- Resources -->
                         {#if stage.resources && stage.resources.length > 0}
                           <div>
-                            <h5 class="font-medium text-sm text-zen-gray-700 mb-2">Resources:</h5>
+                            <h5 class="font-medium text-sm text-gray-700 mb-2">Resources:</h5>
                             <div class="space-y-2">
                               {#each stage.resources as resource}
                                 <a
                                   href={resource.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  class="flex items-start gap-3 p-3 rounded-lg bg-zen-gray-50 hover:bg-zen-gray-100 transition-colors group"
+                                  class="flex items-start gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors group"
                                 >
                                   <span class="text-lg flex-shrink-0">
                                     {getResourceIcon(resource.type)}
@@ -648,12 +648,12 @@
                                       {resource.title}
                                     </p>
                                     {#if resource.description}
-                                      <p class="text-xs text-zen-gray-600 mt-0.5">
+                                      <p class="text-xs text-gray-600 mt-0.5">
                                         {resource.description}
                                       </p>
                                     {/if}
                                   </div>
-                                  <svg class="w-4 h-4 text-zen-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <svg class="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                   </svg>
                                 </a>
@@ -693,12 +693,12 @@
             <div class="space-y-2">
               <button
                 on:click={askAIForHelp}
-                class="w-full text-left p-3 rounded-lg hover:bg-zen-gray-50 transition-colors flex items-center gap-3"
+                class="w-full text-left p-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-3"
               >
                 <span class="text-lg">💬</span>
                 <div>
                   <p class="font-medium text-sm">Ask AI for Help</p>
-                  <p class="text-xs text-zen-gray-600">Get guidance on current stage</p>
+                  <p class="text-xs text-gray-600">Get guidance on current stage</p>
                 </div>
               </button>
               
@@ -713,12 +713,12 @@
                   navigator.clipboard.writeText(notes);
                   showToast('Progress copied to clipboard!');
                 }}
-                class="w-full text-left p-3 rounded-lg hover:bg-zen-gray-50 transition-colors flex items-center gap-3"
+                class="w-full text-left p-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-3"
               >
                 <span class="text-lg">📋</span>
                 <div>
                   <p class="font-medium text-sm">Export Progress</p>
-                  <p class="text-xs text-zen-gray-600">Copy as markdown</p>
+                  <p class="text-xs text-gray-600">Copy as markdown</p>
                 </div>
               </button>
             </div>
@@ -760,7 +760,7 @@
             <h3 class="text-lg font-semibold">Add Stage Note</h3>
             <button
               on:click={() => showNoteModal = false}
-              class="text-zen-gray-400 hover:text-zen-gray-600"
+              class="text-gray-400 hover:text-gray-600"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -772,13 +772,13 @@
             bind:value={noteContent}
             placeholder="Add your thoughts, insights, or questions about this stage..."
             rows="4"
-            class="w-full px-3 py-2 border border-zen-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
           ></textarea>
           
           <div class="flex justify-end gap-3 mt-4">
             <button
               on:click={() => showNoteModal = false}
-              class="px-4 py-2 text-zen-gray-700 hover:bg-zen-gray-100 rounded-lg transition-colors"
+              class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             >
               Cancel
             </button>

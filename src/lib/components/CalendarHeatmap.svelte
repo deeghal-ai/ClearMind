@@ -168,23 +168,23 @@
 <div class="calendar-heatmap">
   <!-- Header with stats -->
   <div class="mb-6">
-    <h3 class="text-lg font-semibold text-zen-gray-800 mb-2">Learning Activity</h3>
+    <h3 class="text-lg font-semibold text-gray-800 mb-2">Learning Activity</h3>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
       <div class="text-center">
         <div class="text-xl font-bold text-green-600">{activeDays}</div>
-        <div class="text-zen-gray-600">Active Days</div>
+        <div class="text-gray-600">Active Days</div>
       </div>
       <div class="text-center">
         <div class="text-xl font-bold text-blue-600">{currentStreak}</div>
-        <div class="text-zen-gray-600">Current Streak</div>
+        <div class="text-gray-600">Current Streak</div>
       </div>
       <div class="text-center">
         <div class="text-xl font-bold text-purple-600">{longestStreak}</div>
-        <div class="text-zen-gray-600">Longest Streak</div>
+        <div class="text-gray-600">Longest Streak</div>
       </div>
       <div class="text-center">
-        <div class="text-xl font-bold text-zen-gray-700">{totalDays}</div>
-        <div class="text-zen-gray-600">Total Days</div>
+        <div class="text-xl font-bold text-gray-700">{totalDays}</div>
+        <div class="text-gray-600">Total Days</div>
       </div>
     </div>
   </div>
@@ -192,7 +192,7 @@
   {#if loading}
     <div class="flex items-center justify-center h-32">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-      <span class="ml-2 text-zen-gray-600">Loading calendar...</span>
+      <span class="ml-2 text-gray-600">Loading calendar...</span>
     </div>
   {:else}
     <!-- Calendar Grid -->
@@ -201,7 +201,7 @@
         <!-- Month labels -->
         <div class="flex mb-2 ml-8">
           {#each ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as month, i}
-            <div class="text-xs text-zen-gray-500 flex-1 text-center" style="min-width: 2.5rem;">
+            <div class="text-xs text-gray-500 flex-1 text-center" style="min-width: 2.5rem;">
               {month}
             </div>
           {/each}
@@ -212,7 +212,7 @@
           <!-- Day labels -->
           <div class="flex flex-col mr-2">
             {#each ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as day, i}
-              <div class="h-3 flex items-center text-xs text-zen-gray-500 mb-1" style="height: 11px;">
+              <div class="h-3 flex items-center text-xs text-gray-500 mb-1" style="height: 11px;">
                 {i % 2 === 1 ? day : ''}
               </div>
             {/each}
@@ -243,10 +243,10 @@
         
         <!-- Tooltip -->
         {#if hoveredCell}
-          <div class="absolute z-10 bg-zen-gray-900 text-white text-xs rounded-lg px-3 py-2 pointer-events-none whitespace-pre-line"
+          <div class="absolute z-10 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 pointer-events-none whitespace-pre-line"
                style="left: 50%; top: -80px; transform: translateX(-50%);">
             {getTooltipText(hoveredCell)}
-            <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-zen-gray-900"></div>
+            <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
           </div>
         {/if}
       </div>
@@ -254,7 +254,7 @@
 
     <!-- Legend -->
     <div class="flex items-center justify-between mt-4">
-      <div class="text-xs text-zen-gray-500">
+      <div class="text-xs text-gray-500">
         Less
       </div>
       <div class="flex gap-1">
@@ -264,7 +264,7 @@
         <div class="heatmap-cell intensity-3"></div>
         <div class="heatmap-cell intensity-4"></div>
       </div>
-      <div class="text-xs text-zen-gray-500">
+      <div class="text-xs text-gray-500">
         More
       </div>
     </div>

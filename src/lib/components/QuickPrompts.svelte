@@ -88,20 +88,20 @@
     : [...contextualPrompts, ...prompts.slice(0, 3)];
 </script>
 
-<div class="border-t border-zen-gray-200 p-4">
-  <h3 class="text-sm font-medium text-zen-gray-700 mb-3">Quick Prompts</h3>
+<div class="border-t border-gray-200 p-4">
+  <h3 class="text-sm font-medium text-gray-700 mb-3">Quick Prompts</h3>
   
   <div class="space-y-2">
     {#each displayPrompts as prompt}
       <button
         on:click={() => usePrompt(prompt)}
-        class="w-full text-left p-3 rounded-lg border border-zen-gray-200 
+        class="w-full text-left p-3 rounded-lg border border-gray-200 
                hover:border-blue-300 hover:bg-blue-50 transition-colors group"
       >
         <p class="font-medium text-sm group-hover:text-blue-600">
           {prompt.title}
         </p>
-        <p class="text-xs text-zen-gray-600 mt-1">
+        <p class="text-xs text-gray-600 mt-1">
           {prompt.prompt}
         </p>
       </button>

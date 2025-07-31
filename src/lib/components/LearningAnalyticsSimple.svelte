@@ -47,16 +47,16 @@
 <div class="learning-analytics space-y-6">
   <!-- Header -->
   <div class="flex items-center justify-between">
-    <h3 class="text-lg font-semibold text-zen-gray-800">Learning Analytics</h3>
+    <h3 class="text-lg font-semibold text-gray-800">Learning Analytics</h3>
   </div>
 
   {#if loading}
     <div class="flex items-center justify-center h-32">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-      <span class="ml-2 text-zen-gray-600">Loading analytics...</span>
+      <span class="ml-2 text-gray-600">Loading analytics...</span>
     </div>
   {:else if recentLogs.length === 0}
-    <div class="text-center py-8 text-zen-gray-500">
+    <div class="text-center py-8 text-gray-500">
       <div class="text-4xl mb-2">📊</div>
       <p>No analytics data available yet</p>
       <p class="text-sm mt-1">Keep logging your learning activities to see insights!</p>
@@ -94,11 +94,11 @@
     </div>
 
     <!-- Recent Learning Activity -->
-    <div class="bg-white p-6 rounded-lg border border-zen-gray-200">
-      <h4 class="text-md font-semibold text-zen-gray-800 mb-4">Recent Learning Activity</h4>
+    <div class="bg-white p-6 rounded-lg border border-gray-200">
+      <h4 class="text-md font-semibold text-gray-800 mb-4">Recent Learning Activity</h4>
       <div class="space-y-2">
         {#each recentLogs.slice(0, 7) as log}
-          <div class="flex items-center justify-between p-2 bg-zen-gray-50 rounded">
+          <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
             <div class="text-sm">
               {new Date(log.date).toLocaleDateString('en-US', { 
                 weekday: 'short', 
@@ -125,43 +125,43 @@
 
     <!-- Mood Distribution -->
     {#if moodStats.total > 0}
-      <div class="bg-white p-6 rounded-lg border border-zen-gray-200">
-        <h4 class="text-md font-semibold text-zen-gray-800 mb-4">Mood Distribution</h4>
+      <div class="bg-white p-6 rounded-lg border border-gray-200">
+        <h4 class="text-md font-semibold text-gray-800 mb-4">Mood Distribution</h4>
         <div class="space-y-3">
           <div class="flex items-center gap-3">
             <div class="w-16 text-sm">🤩 Amazing</div>
-            <div class="flex-1 bg-zen-gray-200 rounded-full h-4">
+            <div class="flex-1 bg-gray-200 rounded-full h-4">
               <div class="bg-green-500 h-4 rounded-full" style="width: {moodStats.amazing}%"></div>
             </div>
-            <div class="w-12 text-sm text-zen-gray-600">{moodStats.amazing}%</div>
+            <div class="w-12 text-sm text-gray-600">{moodStats.amazing}%</div>
           </div>
           
           <div class="flex items-center gap-3">
             <div class="w-16 text-sm">😊 Good</div>
-            <div class="flex-1 bg-zen-gray-200 rounded-full h-4">
+            <div class="flex-1 bg-gray-200 rounded-full h-4">
               <div class="bg-blue-500 h-4 rounded-full" style="width: {moodStats.good}%"></div>
             </div>
-            <div class="w-12 text-sm text-zen-gray-600">{moodStats.good}%</div>
+            <div class="w-12 text-sm text-gray-600">{moodStats.good}%</div>
           </div>
           
           <div class="flex items-center gap-3">
             <div class="w-16 text-sm">😐 Okay</div>
-            <div class="flex-1 bg-zen-gray-200 rounded-full h-4">
+            <div class="flex-1 bg-gray-200 rounded-full h-4">
               <div class="bg-yellow-500 h-4 rounded-full" style="width: {moodStats.okay}%"></div>
             </div>
-            <div class="w-12 text-sm text-zen-gray-600">{moodStats.okay}%</div>
+            <div class="w-12 text-sm text-gray-600">{moodStats.okay}%</div>
           </div>
           
           <div class="flex items-center gap-3">
             <div class="w-16 text-sm">😔 Struggling</div>
-            <div class="flex-1 bg-zen-gray-200 rounded-full h-4">
+            <div class="flex-1 bg-gray-200 rounded-full h-4">
               <div class="bg-orange-500 h-4 rounded-full" style="width: {moodStats.struggling}%"></div>
             </div>
-            <div class="w-12 text-sm text-zen-gray-600">{moodStats.struggling}%</div>
+            <div class="w-12 text-sm text-gray-600">{moodStats.struggling}%</div>
           </div>
         </div>
         
-        <div class="mt-4 text-sm text-zen-gray-600">
+        <div class="mt-4 text-sm text-gray-600">
           Based on {moodStats.total} days with mood data
         </div>
       </div>

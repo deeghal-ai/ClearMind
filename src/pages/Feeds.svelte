@@ -250,7 +250,7 @@
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
     <div>
       <h1 class="text-2xl font-semibold">AI/ML Feeds</h1>
-      <div class="flex items-center gap-4 text-sm text-zen-gray-500 mt-1">
+      <div class="flex items-center gap-4 text-sm text-gray-500 mt-1">
         {#if stats.total > 0}
           <span>{stats.total} articles from {stats.sources} sources</span>
         {/if}
@@ -269,7 +269,7 @@
     <div class="flex items-center gap-2">
       <button
         on:click={() => showSettings = true}
-        class="p-2 text-zen-gray-600 hover:bg-zen-gray-100 rounded-lg transition-colors"
+        class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
         title="Feed settings (Ctrl+S)"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -296,7 +296,7 @@
       </button>
       
       <button 
-        class="px-3 py-2 text-sm text-zen-gray-600 hover:text-zen-gray-800 border border-zen-gray-300 rounded-lg hover:bg-zen-gray-50 transition-colors"
+        class="px-3 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
         on:click={clearCache}
         title="Clear cache"
       >
@@ -310,14 +310,14 @@
     <div class="flex flex-col sm:flex-row gap-4">
       <!-- Search with icon -->
       <div class="flex-1 relative">
-        <svg class="absolute left-3 top-2.5 w-5 h-5 text-zen-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <input
           type="text"
           bind:value={searchTerm}
           placeholder="Search feeds, titles, or content..."
-          class="w-full pl-10 pr-4 py-2 border border-zen-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
       
@@ -325,7 +325,7 @@
       <div class="sm:w-48">
         <select 
           bind:value={selectedCategory}
-          class="w-full px-3 py-2 border border-zen-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         >
           {#each categories as category}
             <option value={category.id}>
@@ -344,15 +344,15 @@
         <div class="card-zen">
           <div class="animate-pulse">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-1 h-8 bg-zen-gray-200 rounded-full"></div>
+              <div class="w-1 h-8 bg-gray-200 rounded-full"></div>
               <div class="flex-1">
-                <div class="h-5 w-32 bg-zen-gray-200 rounded"></div>
-                <div class="h-3 w-24 bg-zen-gray-100 rounded mt-1"></div>
+                <div class="h-5 w-32 bg-gray-200 rounded"></div>
+                <div class="h-3 w-24 bg-gray-100 rounded mt-1"></div>
               </div>
             </div>
             <div class="space-y-3">
               {#each Array(3) as _}
-                <div class="h-16 bg-zen-gray-100 rounded"></div>
+                <div class="h-16 bg-gray-100 rounded"></div>
               {/each}
             </div>
           </div>
@@ -385,7 +385,7 @@
   {:else if filteredFeeds.length === 0}
     <div class="card-zen text-center py-12">
       <div class="text-4xl mb-4">📡</div>
-      <p class="text-zen-gray-500">
+      <p class="text-gray-500">
         {searchTerm || selectedCategory !== 'all' 
           ? 'No feeds match your search criteria.' 
           : 'No feeds available.'}
@@ -403,7 +403,7 @@
             Refresh Feeds
           </button>
           <button 
-            class="px-4 py-2 text-zen-gray-700 border border-zen-gray-300 rounded-lg hover:bg-zen-gray-50 transition-colors"
+            class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
             on:click={() => showSettings = true}
           >
             Check Settings
@@ -421,22 +421,22 @@
           <div class="flex items-center gap-3">
             <button
               on:click={() => toggleSource(feed.source)}
-              class="text-zen-gray-400 hover:text-zen-gray-600 transition-colors"
+              class="text-gray-400 hover:text-gray-600 transition-colors"
             >
               {collapsedSources.has(feed.source) ? '▶️' : '▼'}
             </button>
             
             <div>
-              <h2 class="font-semibold text-zen-gray-800">{feed.source}</h2>
+              <h2 class="font-semibold text-gray-800">{feed.source}</h2>
               <div class="flex items-center gap-2 mt-1">
                 <span class="text-xs px-2 py-1 rounded-full border {getCategoryColor(getFeedCategory(feed.source))}">
                   {getFeedCategory(feed.source)}
                 </span>
-                <span class="text-xs text-zen-gray-500">
+                <span class="text-xs text-gray-500">
                   {feed.items.length} items
                 </span>
                 {#if feed.fetchedAt}
-                  <span class="text-xs text-zen-gray-400">
+                  <span class="text-xs text-gray-400">
                     • {formatTimeAgo(feed.fetchedAt)}
                   </span>
                 {/if}
@@ -461,17 +461,17 @@
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block p-3 -mx-3 rounded-lg hover:bg-zen-gray-50 transition-colors group border-l-2 border-transparent hover:border-blue-300"
+                class="block p-3 -mx-3 rounded-lg hover:bg-gray-50 transition-colors group border-l-2 border-transparent hover:border-blue-300"
               >
                 <h3 class="font-medium text-blue-600 group-hover:underline mb-1">
                   {item.title}
                 </h3>
                 {#if item.description}
-                  <p class="text-sm text-zen-gray-600 mb-2 line-clamp-2">
+                  <p class="text-sm text-gray-600 mb-2 line-clamp-2">
                     {item.description}
                   </p>
                 {/if}
-                <div class="flex items-center justify-between text-xs text-zen-gray-400">
+                <div class="flex items-center justify-between text-xs text-gray-400">
                   <span>{formatTimeAgo(item.pubDate)}</span>
                   {#if item.author}
                     <span>by {item.author}</span>

@@ -77,7 +77,7 @@
         class="prose prose-sm max-w-none rounded-lg p-4
                {isUser 
                  ? 'bg-blue-500 text-white prose-invert' 
-                 : 'bg-zen-gray-100 text-zen-gray-800'}"
+                 : 'bg-gray-100 text-gray-800'}"
       >
         {#if isUser}
           {message.content}
@@ -90,10 +90,10 @@
       </div>
       
       {#if !isUser && !streaming && message.content}
-        <div class="flex items-center gap-2 mt-2 text-xs text-zen-gray-500">
+        <div class="flex items-center gap-2 mt-2 text-xs text-gray-500">
           <button
             on:click={() => copyCode(message.content)}
-            class="hover:text-zen-gray-700 flex items-center gap-1"
+            class="hover:text-gray-700 flex items-center gap-1"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -107,8 +107,8 @@
     </div>
     
     {#if isUser}
-      <div class="flex-shrink-0 w-8 h-8 rounded-full bg-zen-gray-300 flex items-center justify-center">
-        <span class="text-zen-gray-700 text-sm">U</span>
+      <div class="flex-shrink-0 w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+        <span class="text-gray-700 text-sm">U</span>
       </div>
     {/if}
   </div>

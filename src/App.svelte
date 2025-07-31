@@ -26,16 +26,16 @@
   $: currentComponent = navigationItems.find(nav => nav.id === $navigation.currentTab)?.component;
 </script>
 
-<div class="min-h-screen bg-zen-gray-50">
+<div class="min-h-screen bg-gray-50">
   <!-- Header -->
-  <header class="bg-white border-b border-zen-gray-200">
+  <header class="bg-white border-b border-gray-200">
     <div class="container-zen">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center space-x-2">
           <span class="text-2xl">🧠</span>
           <span class="font-semibold text-lg">ClearMind</span>
         </div>
-        <span class="text-sm text-zen-gray-500">
+        <span class="text-sm text-gray-500">
           {#if userId}
             ID: {userId.slice(0, 8)}
           {/if}
@@ -45,7 +45,7 @@
   </header>
   
   <!-- Navigation -->
-  <nav class="bg-white border-b border-zen-gray-100 sticky top-0 z-10">
+  <nav class="bg-white border-b border-gray-100 sticky top-0 z-10">
     <div class="container-zen">
       <div class="flex space-x-1">
         {#each navigationItems as item}

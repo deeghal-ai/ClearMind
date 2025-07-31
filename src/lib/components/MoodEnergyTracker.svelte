@@ -95,7 +95,7 @@
 <div class="mood-energy-container space-y-6">
   <!-- Mood Selection -->
   <div>
-    <h4 class="text-sm font-medium text-zen-gray-700 mb-3">How are you feeling today?</h4>
+    <h4 class="text-sm font-medium text-gray-700 mb-3">How are you feeling today?</h4>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
       {#each moods as moodOption}
         <button
@@ -104,7 +104,7 @@
           class="p-3 rounded-lg border-2 transition-all hover:scale-105
                  {mood === moodOption.key 
                    ? 'border-blue-500 bg-blue-50' 
-                   : 'border-zen-gray-200 hover:border-zen-gray-300'}"
+                   : 'border-gray-200 hover:border-gray-300'}"
         >
           <div class="text-2xl mb-1">{moodOption.emoji}</div>
           <div class="text-xs font-medium {moodOption.color}">{moodOption.label}</div>
@@ -115,9 +115,9 @@
 
   <!-- Energy Level -->
   <div>
-    <h4 class="text-sm font-medium text-zen-gray-700 mb-3">Energy Level</h4>
+    <h4 class="text-sm font-medium text-gray-700 mb-3">Energy Level</h4>
     <div class="flex items-center gap-2">
-      <span class="text-xs text-zen-gray-500">Low</span>
+      <span class="text-xs text-gray-500">Low</span>
       <div class="flex gap-1">
         {#each [1, 2, 3, 4, 5] as level}
           <button
@@ -126,7 +126,7 @@
             class="w-8 h-8 rounded-full border-2 transition-all
                    {energyLevel >= level 
                      ? 'bg-gradient-to-r from-orange-400 to-red-500 border-orange-500' 
-                     : 'border-zen-gray-300 hover:border-orange-300'}"
+                     : 'border-gray-300 hover:border-orange-300'}"
           >
             {#if energyLevel >= level}
               <div class="w-full h-full rounded-full bg-white opacity-30"></div>
@@ -134,9 +134,9 @@
           </button>
         {/each}
       </div>
-      <span class="text-xs text-zen-gray-500">High</span>
+      <span class="text-xs text-gray-500">High</span>
       {#if energyLevel}
-        <span class="ml-2 text-sm font-medium text-zen-gray-700">{energyLevel}/5</span>
+        <span class="ml-2 text-sm font-medium text-gray-700">{energyLevel}/5</span>
       {/if}
     </div>
   </div>
@@ -144,8 +144,8 @@
   <!-- Learning Time Tracker -->
   <div>
     <div class="flex items-center justify-between mb-3">
-      <h4 class="text-sm font-medium text-zen-gray-700">Learning Time</h4>
-      <div class="text-sm text-zen-gray-600">
+      <h4 class="text-sm font-medium text-gray-700">Learning Time</h4>
+      <div class="text-sm text-gray-600">
         {learningMinutes} minutes today
       </div>
     </div>
@@ -156,7 +156,7 @@
         <button
           on:click={() => addLearningTime(minutes)}
           disabled={loading}
-          class="px-3 py-1 text-xs bg-zen-gray-100 hover:bg-zen-gray-200 
+          class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 
                  rounded-full transition-colors disabled:opacity-50"
         >
           +{minutes}m
@@ -166,15 +166,15 @@
     
     <!-- Learning time visualization -->
     <div class="relative">
-      <div class="w-full bg-zen-gray-200 rounded-full h-3">
+      <div class="w-full bg-gray-200 rounded-full h-3">
         <div 
           class="bg-gradient-to-r from-purple-400 to-purple-600 h-3 rounded-full transition-all duration-500"
           style="width: {Math.min(100, (learningMinutes / 120) * 100)}%"
         ></div>
       </div>
-      <div class="flex justify-between text-xs text-zen-gray-500 mt-1">
+      <div class="flex justify-between text-xs text-gray-500 mt-1">
         <span>0m</span>
-        <span class="text-zen-gray-700 font-medium">{learningMinutes}m</span>
+        <span class="text-gray-700 font-medium">{learningMinutes}m</span>
         <span>2h goal</span>
       </div>
     </div>
@@ -183,8 +183,8 @@
   <!-- Focus Sessions -->
   <div>
     <div class="flex items-center justify-between mb-3">
-      <h4 class="text-sm font-medium text-zen-gray-700">Focus Sessions</h4>
-      <div class="text-sm text-zen-gray-600">
+      <h4 class="text-sm font-medium text-gray-700">Focus Sessions</h4>
+      <div class="text-sm text-gray-600">
         {focusSessions} sessions today
       </div>
     </div>
@@ -197,7 +197,7 @@
              flex items-center justify-center gap-2
              {isSessionActive 
                ? 'border-red-400 bg-red-50 hover:bg-red-100' 
-               : 'border-dashed border-zen-gray-300 hover:border-blue-400 hover:bg-blue-50'}"
+               : 'border-dashed border-gray-300 hover:border-blue-400 hover:bg-blue-50'}"
     >
       {#if isSessionActive}
         <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -229,13 +229,13 @@
   <!-- Daily Summary Card -->
   {#if mood || energyLevel || learningMinutes > 0 || focusSessions > 0}
     <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 border border-blue-100">
-      <h5 class="text-sm font-semibold text-zen-gray-800 mb-2">Today's Snapshot</h5>
+      <h5 class="text-sm font-semibold text-gray-800 mb-2">Today's Snapshot</h5>
       <div class="grid grid-cols-2 gap-4 text-xs">
         <div class="text-center">
           <div class="text-lg mb-1">
             {mood ? moods.find(m => m.key === mood)?.emoji : '😶'}
           </div>
-          <div class="text-zen-gray-600">
+          <div class="text-gray-600">
             {mood ? moods.find(m => m.key === mood)?.label : 'No mood set'}
           </div>
         </div>
@@ -243,19 +243,19 @@
           <div class="text-lg mb-1 font-bold text-orange-600">
             {energyLevel || '?'}/5
           </div>
-          <div class="text-zen-gray-600">Energy</div>
+          <div class="text-gray-600">Energy</div>
         </div>
         <div class="text-center">
           <div class="text-lg mb-1 font-bold text-purple-600">
             {learningMinutes}m
           </div>
-          <div class="text-zen-gray-600">Learning</div>
+          <div class="text-gray-600">Learning</div>
         </div>
         <div class="text-center">
           <div class="text-lg mb-1 font-bold text-blue-600">
             {focusSessions}
           </div>
-          <div class="text-zen-gray-600">Sessions</div>
+          <div class="text-gray-600">Sessions</div>
         </div>
       </div>
     </div>

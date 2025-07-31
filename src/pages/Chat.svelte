@@ -184,11 +184,11 @@
   <!-- Main Chat Area -->
   <div class="flex-1 flex flex-col">
     <!-- Header -->
-    <div class="bg-white border-b border-zen-gray-200 px-4 py-3 flex items-center justify-between">
+    <div class="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <button
           on:click={toggleSidebar}
-          class="lg:hidden p-2 hover:bg-zen-gray-100 rounded-lg"
+          class="lg:hidden p-2 hover:bg-gray-100 rounded-lg"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -198,7 +198,7 @@
         <div>
           <h1 class="text-xl font-semibold">AI Learning Assistant</h1>
           {#if $currentContext.type}
-            <p class="text-sm text-zen-gray-600">
+            <p class="text-sm text-gray-600">
               Context: {$currentContext.type === 'roadmap' ? `${$currentContext.roadmap} - ${$currentContext.stage || 'General'}` :
                        $currentContext.type === 'feeds' ? 'Recent articles' :
                        'General learning'}
@@ -229,10 +229,10 @@
         <div class="flex items-center justify-center h-full">
           <div class="text-center max-w-md">
             <div class="text-6xl mb-4">🤖</div>
-            <h2 class="text-2xl font-semibold text-zen-gray-700 mb-2">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-2">
               How can I help you learn today?
             </h2>
-            <p class="text-zen-gray-600">
+            <p class="text-gray-600">
               Ask me anything about AI, machine learning, or your current learning path. 
               I'm here to help you understand complex concepts and guide your journey.
             </p>
@@ -271,9 +271,9 @@
     
     <!-- Context Indicator -->
     {#if contextInfo.mood || contextInfo.energy || contextInfo.goals !== '0/0'}
-      <div class="border-t border-zen-gray-100 bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-2">
+      <div class="border-t border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-2">
         <div class="flex items-center gap-4 text-xs">
-          <span class="font-medium text-zen-gray-600">AI Context:</span>
+          <span class="font-medium text-gray-600">AI Context:</span>
           {#if contextInfo.mood}
             <span class="flex items-center gap-1">
               <span class="text-sm">
@@ -281,31 +281,31 @@
                  contextInfo.mood === 'good' ? '😊' : 
                  contextInfo.mood === 'okay' ? '😐' : '😔'}
               </span>
-              <span class="text-zen-gray-600">{contextInfo.mood}</span>
+              <span class="text-gray-600">{contextInfo.mood}</span>
             </span>
           {/if}
           {#if contextInfo.energy}
             <span class="flex items-center gap-1">
               <span class="text-orange-600">⚡</span>
-              <span class="text-zen-gray-600">{contextInfo.energy}/5</span>
+              <span class="text-gray-600">{contextInfo.energy}/5</span>
             </span>
           {/if}
           {#if contextInfo.goals !== '0/0'}
             <span class="flex items-center gap-1">
               <span class="text-green-600">🎯</span>
-              <span class="text-zen-gray-600">{contextInfo.goals} goals</span>
+              <span class="text-gray-600">{contextInfo.goals} goals</span>
             </span>
           {/if}
           {#if contextInfo.learningTime !== '0m'}
             <span class="flex items-center gap-1">
               <span class="text-blue-600">⏱️</span>
-              <span class="text-zen-gray-600">{contextInfo.learningTime}</span>
+              <span class="text-gray-600">{contextInfo.learningTime}</span>
             </span>
           {/if}
           {#if contextInfo.streak > 0}
             <span class="flex items-center gap-1">
               <span class="text-red-600">🔥</span>
-              <span class="text-zen-gray-600">{contextInfo.streak} days</span>
+              <span class="text-gray-600">{contextInfo.streak} days</span>
             </span>
           {/if}
         </div>
@@ -313,7 +313,7 @@
     {/if}
 
     <!-- Input Area -->
-    <div class="border-t border-zen-gray-200 p-4 bg-white">
+    <div class="border-t border-gray-200 p-4 bg-white">
       <form on:submit|preventDefault={(e) => {
         console.log('🔍 DEBUG Chat.svelte: Form submitted');
         sendMessage();
@@ -325,7 +325,7 @@
           placeholder="Ask me anything..."
           rows="1"
           disabled={$chatStore.streaming}
-          class="flex-1 px-4 py-3 border border-zen-gray-300 rounded-lg resize-none
+          class="flex-1 px-4 py-3 border border-gray-300 rounded-lg resize-none
                  focus:outline-none focus:ring-2 focus:ring-blue-500
                  disabled:opacity-50 disabled:cursor-not-allowed"
           style="min-height: 48px; max-height: 200px;"
@@ -353,7 +353,7 @@
         </button>
       </form>
       
-      <div class="mt-2 flex items-center justify-between text-xs text-zen-gray-500">
+      <div class="mt-2 flex items-center justify-between text-xs text-gray-500">
         <div class="flex items-center gap-4">
           <span>⌘/Ctrl + Enter to send</span>
           <span>Shift + Enter for new line</span>

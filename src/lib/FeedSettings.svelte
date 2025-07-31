@@ -131,15 +131,15 @@
       
       <!-- Modal -->
       <div class="relative bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
-        <div class="p-6 border-b border-zen-gray-200">
+        <div class="p-6 border-b border-gray-200">
           <div class="flex items-center justify-between">
             <div>
               <h2 class="text-xl font-semibold">Feed Settings</h2>
-              <p class="text-sm text-zen-gray-600 mt-1">Manage your RSS feed sources</p>
+              <p class="text-sm text-gray-600 mt-1">Manage your RSS feed sources</p>
             </div>
             <button
               on:click={close}
-              class="text-zen-gray-400 hover:text-zen-gray-600 transition-colors"
+              class="text-gray-400 hover:text-gray-600 transition-colors"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -151,10 +151,10 @@
         <div class="p-6 overflow-y-auto max-h-[60vh] space-y-6">
           <!-- Default Sources -->
           <div>
-            <h3 class="font-medium text-zen-gray-800 mb-3">Default Sources</h3>
+            <h3 class="font-medium text-gray-800 mb-3">Default Sources</h3>
             <div class="space-y-2">
               {#each sources.filter(s => !s.id.startsWith('custom_')) as source}
-                <div class="flex items-center p-3 rounded-lg hover:bg-zen-gray-50 transition-colors">
+                <div class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors">
                   <input
                     type="checkbox"
                     checked={source.active}
@@ -163,12 +163,12 @@
                   />
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2">
-                      <p class="font-medium text-zen-gray-800">{source.id.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
+                      <p class="font-medium text-gray-800">{source.id.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
                       <span class="text-xs px-2 py-1 rounded-full border {source.category === 'news' ? 'bg-blue-50 text-blue-700 border-blue-200' : source.category === 'research' ? 'bg-purple-50 text-purple-700 border-purple-200' : 'bg-green-50 text-green-700 border-green-200'}">
                         {source.category}
                       </span>
                     </div>
-                    <p class="text-xs text-zen-gray-500 truncate mt-1">{source.description}</p>
+                    <p class="text-xs text-gray-500 truncate mt-1">{source.description}</p>
                   </div>
                 </div>
               {/each}
@@ -178,10 +178,10 @@
           <!-- Custom Sources -->
           {#if sources.some(s => s.id.startsWith('custom_'))}
             <div>
-              <h3 class="font-medium text-zen-gray-800 mb-3">Custom Sources</h3>
+              <h3 class="font-medium text-gray-800 mb-3">Custom Sources</h3>
               <div class="space-y-2">
                 {#each sources.filter(s => s.id.startsWith('custom_')) as source}
-                  <div class="flex items-center p-3 rounded-lg bg-zen-gray-50">
+                  <div class="flex items-center p-3 rounded-lg bg-gray-50">
                     <input
                       type="checkbox"
                       checked={source.active}
@@ -189,8 +189,8 @@
                       class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500 mr-3"
                     />
                     <div class="flex-1 min-w-0">
-                      <p class="font-medium text-zen-gray-800">{source.description}</p>
-                      <p class="text-xs text-zen-gray-500 truncate">{source.url}</p>
+                      <p class="font-medium text-gray-800">{source.description}</p>
+                      <p class="text-xs text-gray-500 truncate">{source.url}</p>
                     </div>
                     <button
                       on:click={() => removeCustomFeed(source.id)}
@@ -208,22 +208,22 @@
           {/if}
           
           <!-- Add Custom Feed -->
-          <div class="border-t border-zen-gray-200 pt-6">
-            <h3 class="font-medium text-zen-gray-800 mb-3">Add Custom RSS Feed</h3>
+          <div class="border-t border-gray-200 pt-6">
+            <h3 class="font-medium text-gray-800 mb-3">Add Custom RSS Feed</h3>
             <form on:submit|preventDefault={addCustomFeed} class="space-y-3">
               <input
                 bind:value={newFeedName}
                 type="text"
                 placeholder="Feed name (e.g. 'My AI Blog')"
                 required
-                class="w-full px-3 py-2 border border-zen-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
               <input
                 bind:value={newFeedUrl}
                 type="url"
                 placeholder="RSS feed URL (e.g. https://example.com/feed.xml)"
                 required
-                class="w-full px-3 py-2 border border-zen-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
               <button
                 type="submit"
@@ -243,11 +243,11 @@
           </div>
         </div>
         
-        <div class="p-6 border-t border-zen-gray-200 bg-zen-gray-50">
+        <div class="p-6 border-t border-gray-200 bg-gray-50">
           <div class="flex justify-end gap-3">
             <button
               on:click={close}
-              class="px-4 py-2 text-zen-gray-700 hover:bg-zen-gray-200 rounded-lg transition-colors"
+              class="px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg transition-colors"
             >
               Close
             </button>

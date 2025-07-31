@@ -181,16 +181,16 @@
 <div class="learning-analytics space-y-6">
   <!-- Header -->
   <div class="flex items-center justify-between">
-    <h3 class="text-lg font-semibold text-zen-gray-800">Learning Analytics</h3>
+    <h3 class="text-lg font-semibold text-gray-800">Learning Analytics</h3>
     <div class="flex gap-2">
       <button
-        class="px-3 py-1 text-xs rounded-full {selectedTimeframe === 'week' ? 'bg-blue-100 text-blue-700' : 'bg-zen-gray-100 text-zen-gray-600'}"
+        class="px-3 py-1 text-xs rounded-full {selectedTimeframe === 'week' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'}"
         on:click={() => selectedTimeframe = 'week'}
       >
         Week
       </button>
       <button
-        class="px-3 py-1 text-xs rounded-full {selectedTimeframe === 'month' ? 'bg-blue-100 text-blue-700' : 'bg-zen-gray-100 text-zen-gray-600'}"
+        class="px-3 py-1 text-xs rounded-full {selectedTimeframe === 'month' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'}"
         on:click={() => selectedTimeframe = 'month'}
       >
         Month
@@ -201,10 +201,10 @@
   {#if loading}
     <div class="flex items-center justify-center h-32">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-      <span class="ml-2 text-zen-gray-600">Loading analytics...</span>
+      <span class="ml-2 text-gray-600">Loading analytics...</span>
     </div>
   {:else if processedStats.labels.length === 0}
-    <div class="text-center py-8 text-zen-gray-500">
+    <div class="text-center py-8 text-gray-500">
       <div class="text-4xl mb-2">📊</div>
       <p>No analytics data available yet</p>
       <p class="text-sm mt-1">Keep logging your learning activities to see insights!</p>
@@ -242,13 +242,13 @@
     </div>
 
     <!-- Learning Time Trend -->
-    <div class="bg-white p-6 rounded-lg border border-zen-gray-200">
-      <h4 class="text-md font-semibold text-zen-gray-800 mb-4">Learning Time Trend</h4>
+    <div class="bg-white p-6 rounded-lg border border-gray-200">
+      <h4 class="text-md font-semibold text-gray-800 mb-4">Learning Time Trend</h4>
       <div class="space-y-3">
         {#each processedStats.labels as label, i}
           <div class="flex items-center gap-3">
-            <div class="w-16 text-xs text-zen-gray-600">{label}</div>
-            <div class="flex-1 bg-zen-gray-100 rounded-full h-6 relative">
+            <div class="w-16 text-xs text-gray-600">{label}</div>
+            <div class="flex-1 bg-gray-100 rounded-full h-6 relative">
               <div 
                 class="bg-gradient-to-r from-blue-400 to-blue-600 h-6 rounded-full flex items-center justify-end pr-2"
                 style="width: {getBarWidth(processedStats.learningMinutes[i], Math.max(...processedStats.learningMinutes))}%"
@@ -264,13 +264,13 @@
     </div>
 
     <!-- Goal Completion Rate -->
-    <div class="bg-white p-6 rounded-lg border border-zen-gray-200">
-      <h4 class="text-md font-semibold text-zen-gray-800 mb-4">Goal Completion Rate</h4>
+    <div class="bg-white p-6 rounded-lg border border-gray-200">
+      <h4 class="text-md font-semibold text-gray-800 mb-4">Goal Completion Rate</h4>
       <div class="space-y-3">
         {#each processedStats.labels as label, i}
           <div class="flex items-center gap-3">
-            <div class="w-16 text-xs text-zen-gray-600">{label}</div>
-            <div class="flex-1 bg-zen-gray-100 rounded-full h-6 relative">
+            <div class="w-16 text-xs text-gray-600">{label}</div>
+            <div class="flex-1 bg-gray-100 rounded-full h-6 relative">
               <div 
                 class="bg-gradient-to-r from-green-400 to-green-600 h-6 rounded-full flex items-center justify-end pr-2"
                 style="width: {processedStats.goalCompletion[i]}%"
@@ -287,39 +287,39 @@
 
     <!-- Mood Distribution -->
     {#if moodTrends.total > 0}
-      <div class="bg-white p-6 rounded-lg border border-zen-gray-200">
-        <h4 class="text-md font-semibold text-zen-gray-800 mb-4">Mood Distribution (Last 30 Days)</h4>
+      <div class="bg-white p-6 rounded-lg border border-gray-200">
+        <h4 class="text-md font-semibold text-gray-800 mb-4">Mood Distribution (Last 30 Days)</h4>
         <div class="space-y-3">
           <div class="flex items-center gap-3">
             <div class="w-16 text-xs">🤩 Amazing</div>
-            <div class="flex-1 bg-zen-gray-100 rounded-full h-4">
+            <div class="flex-1 bg-gray-100 rounded-full h-4">
               <div class="bg-green-500 h-4 rounded-full" style="width: {moodTrends.amazing}%"></div>
             </div>
-            <div class="w-12 text-xs text-zen-gray-600 text-right">{moodTrends.amazing}%</div>
+            <div class="w-12 text-xs text-gray-600 text-right">{moodTrends.amazing}%</div>
           </div>
           
           <div class="flex items-center gap-3">
             <div class="w-16 text-xs">😊 Good</div>
-            <div class="flex-1 bg-zen-gray-100 rounded-full h-4">
+            <div class="flex-1 bg-gray-100 rounded-full h-4">
               <div class="bg-blue-500 h-4 rounded-full" style="width: {moodTrends.good}%"></div>
             </div>
-            <div class="w-12 text-xs text-zen-gray-600 text-right">{moodTrends.good}%</div>
+            <div class="w-12 text-xs text-gray-600 text-right">{moodTrends.good}%</div>
           </div>
           
           <div class="flex items-center gap-3">
             <div class="w-16 text-xs">😐 Okay</div>
-            <div class="flex-1 bg-zen-gray-100 rounded-full h-4">
+            <div class="flex-1 bg-gray-100 rounded-full h-4">
               <div class="bg-yellow-500 h-4 rounded-full" style="width: {moodTrends.okay}%"></div>
             </div>
-            <div class="w-12 text-xs text-zen-gray-600 text-right">{moodTrends.okay}%</div>
+            <div class="w-12 text-xs text-gray-600 text-right">{moodTrends.okay}%</div>
           </div>
           
           <div class="flex items-center gap-3">
             <div class="w-16 text-xs">😔 Struggling</div>
-            <div class="flex-1 bg-zen-gray-100 rounded-full h-4">
+            <div class="flex-1 bg-gray-100 rounded-full h-4">
               <div class="bg-orange-500 h-4 rounded-full" style="width: {moodTrends.struggling}%"></div>
             </div>
-            <div class="w-12 text-xs text-zen-gray-600 text-right">{moodTrends.struggling}%</div>
+            <div class="w-12 text-xs text-gray-600 text-right">{moodTrends.struggling}%</div>
           </div>
         </div>
       </div>
@@ -327,8 +327,8 @@
 
     <!-- Insights -->
     {#if productivityInsights.length > 0}
-      <div class="bg-white p-6 rounded-lg border border-zen-gray-200">
-        <h4 class="text-md font-semibold text-zen-gray-800 mb-4">Insights & Recommendations</h4>
+      <div class="bg-white p-6 rounded-lg border border-gray-200">
+        <h4 class="text-md font-semibold text-gray-800 mb-4">Insights & Recommendations</h4>
         <div class="space-y-3">
           {#each productivityInsights as insight}
             <div class="flex items-start gap-3 p-3 rounded-lg

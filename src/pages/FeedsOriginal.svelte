@@ -191,7 +191,7 @@
     <div>
       <h1 class="text-2xl font-semibold">AI/ML Feeds</h1>
       {#if lastUpdated}
-        <p class="text-sm text-zen-gray-500 mt-1">
+        <p class="text-sm text-gray-500 mt-1">
           Last updated: {formatTimeAgo(lastUpdated)}
           {#if cacheAge !== null}
             • Cached {formatCacheAge(cacheAge)}
@@ -211,7 +211,7 @@
       </button>
       
       <button 
-        class="px-3 py-2 text-sm text-zen-gray-600 hover:text-zen-gray-800 border border-zen-gray-300 rounded-lg hover:bg-zen-gray-50 transition-colors"
+        class="px-3 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
         on:click={clearCache}
         title="Clear cache"
       >
@@ -229,7 +229,7 @@
           type="text"
           bind:value={searchTerm}
           placeholder="Search feeds, titles, or content..."
-          class="w-full px-4 py-2 border border-zen-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
       
@@ -237,7 +237,7 @@
       <div class="sm:w-48">
         <select 
           bind:value={selectedCategory}
-          class="w-full px-3 py-2 border border-zen-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         >
           {#each categories as category}
             <option value={category.id}>
@@ -281,7 +281,7 @@
   {:else if filteredFeeds.length === 0}
     <div class="card-zen text-center py-12">
       <div class="text-4xl mb-4">📡</div>
-      <p class="text-zen-gray-500">
+      <p class="text-gray-500">
         {searchTerm || selectedCategory !== 'all' 
           ? 'No feeds match your search criteria.' 
           : 'No feeds available.'}
@@ -305,18 +305,18 @@
           <div class="flex items-center gap-3">
             <button
               on:click={() => toggleSource(feed.source)}
-              class="text-zen-gray-400 hover:text-zen-gray-600 transition-colors"
+              class="text-gray-400 hover:text-gray-600 transition-colors"
             >
               {collapsedSources.has(feed.source) ? '▶️' : '▼'}
             </button>
             
             <div>
-              <h2 class="font-semibold text-zen-gray-800">{feed.source}</h2>
+              <h2 class="font-semibold text-gray-800">{feed.source}</h2>
               <div class="flex items-center gap-2 mt-1">
                 <span class="text-xs px-2 py-1 rounded-full border {getCategoryColor(getFeedCategory(feed.source))}">
                   {getFeedCategory(feed.source)}
                 </span>
-                <span class="text-xs text-zen-gray-500">
+                <span class="text-xs text-gray-500">
                   {feed.items.length} items
                 </span>
               </div>
@@ -338,17 +338,17 @@
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block p-3 -mx-3 rounded-lg hover:bg-zen-gray-50 transition-colors group border-l-2 border-transparent hover:border-blue-300"
+                class="block p-3 -mx-3 rounded-lg hover:bg-gray-50 transition-colors group border-l-2 border-transparent hover:border-blue-300"
               >
                 <h3 class="font-medium text-blue-600 group-hover:underline mb-1">
                   {item.title}
                 </h3>
                 {#if item.description}
-                  <p class="text-sm text-zen-gray-600 mb-2 line-clamp-2">
+                  <p class="text-sm text-gray-600 mb-2 line-clamp-2">
                     {item.description}
                   </p>
                 {/if}
-                <p class="text-xs text-zen-gray-400">
+                <p class="text-xs text-gray-400">
                   {formatTimeAgo(item.pubDate)}
                 </p>
               </a>
