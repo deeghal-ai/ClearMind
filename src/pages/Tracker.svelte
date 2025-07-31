@@ -298,10 +298,11 @@
           
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium text-zen-gray-700 mb-2">
+              <label for="key-learning" class="block text-sm font-medium text-zen-gray-700 mb-2">
                 Key Learning Today
               </label>
               <input
+                id="key-learning"
                 bind:value={keyLearning}
                 on:input={handleReflectionChange}
                 placeholder="What's the most important thing you learned today?"
@@ -310,10 +311,11 @@
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-zen-gray-700 mb-2">
+              <label for="reflection" class="block text-sm font-medium text-zen-gray-700 mb-2">
                 Reflection
               </label>
               <textarea
+                id="reflection"
                 bind:value={reflection}
                 on:input={handleReflectionChange}
                 rows="4"

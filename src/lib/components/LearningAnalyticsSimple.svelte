@@ -1,5 +1,4 @@
 <script>
-  export let weeklyStats = [];
   export let recentLogs = [];
   export let loading = false;
   

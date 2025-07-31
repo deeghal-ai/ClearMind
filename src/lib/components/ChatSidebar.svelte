@@ -4,7 +4,6 @@
   
   export let sessions = [];
   export let currentSessionId = null;
-  export let userId;
   
   const dispatch = createEventDispatcher();
   

@@ -122,7 +122,11 @@
       <!-- Backdrop -->
       <div 
         class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+        role="button"
+        tabindex="0"
         on:click={close}
+        on:keydown={(e) => e.key === 'Escape' && close()}
+        aria-label="Close modal"
       ></div>
       
       <!-- Modal -->
