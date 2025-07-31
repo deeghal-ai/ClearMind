@@ -130,7 +130,7 @@ function createChatStore() {
     },
     
     async sendMessage(message, userId) {
-      const state = get(chatStore);
+      let state = get(chatStore);
       
       // Create session if none exists
       if (!state.currentSession) {
@@ -141,6 +141,8 @@ function createChatStore() {
           return;
         }
         console.log('✅ DEBUG: Session created:', session);
+        // Get updated state after session creation
+        state = get(chatStore);
       }
       
       // Add user message to UI
