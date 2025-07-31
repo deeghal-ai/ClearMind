@@ -21,6 +21,33 @@
       userId = 'user_' + Math.random().toString(36).substr(2, 9);
       localStorage.setItem('learningos_user_id', userId);
     }
+    
+    // CSS Debug - check what's loaded on Vercel vs local
+    setTimeout(() => {
+      console.log('🎨 CSS DEBUG INFO:');
+      console.log('📊 Stylesheets loaded:', document.styleSheets.length);
+      
+      // Check if main.css is loaded
+      const links = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
+      console.log('🔗 CSS Links:', links.map(l => l.href));
+      
+      // Test if Tailwind classes work
+      const testEl = document.createElement('div');
+      testEl.className = 'bg-blue-500 text-white p-4';
+      testEl.style.position = 'fixed';
+      testEl.style.top = '10px';
+      testEl.style.right = '10px';
+      testEl.style.zIndex = '9999';
+      testEl.innerHTML = 'CSS Test';
+      document.body.appendChild(testEl);
+      
+      const computed = window.getComputedStyle(testEl);
+      console.log('🎯 Tailwind Test - BG Color:', computed.backgroundColor);
+      console.log('🎯 Tailwind Test - Padding:', computed.padding);
+      
+      // Remove test element after 5 seconds
+      setTimeout(() => document.body.removeChild(testEl), 5000);
+    }, 1000);
   });
   
   $: currentComponent = navigationItems.find(nav => nav.id === $navigation.currentTab)?.component;
