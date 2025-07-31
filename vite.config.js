@@ -8,17 +8,15 @@ export default defineConfig({
     host: true
   },
   build: {
-    // Ensure CSS is properly extracted
     cssCodeSplit: false,
     rollupOptions: {
       output: {
-        // Ensure CSS is in a single file
-        assetFileNames: 'assets/[name].[ext]'
+        manualChunks: undefined,
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') return 'assets/main.css';
+          return 'assets/[name]-[hash][extname]';
+        }
       }
     }
-  },
-  // Ensure PostCSS is properly configured
-  css: {
-    postcss: './postcss.config.js'
   }
 })
