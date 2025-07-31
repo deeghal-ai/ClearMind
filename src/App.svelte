@@ -16,10 +16,21 @@
   ];
   
   onMount(() => {
-    userId = localStorage.getItem('learningos_user_id') || '';
-    if (!userId) {
-      userId = 'user_' + Math.random().toString(36).substr(2, 9);
+    // Check URL for user ID first
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlUserId = urlParams.get('user');
+    
+    if (urlUserId) {
+      // Use URL user ID and save it
+      userId = urlUserId;
       localStorage.setItem('learningos_user_id', userId);
+    } else {
+      // Use localStorage or create new
+      userId = localStorage.getItem('learningos_user_id') || '';
+      if (!userId) {
+        userId = 'user_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('learningos_user_id', userId);
+      }
     }
   });
   
@@ -35,11 +46,15 @@
           <span class="text-2xl">🧠</span>
           <span class="font-semibold text-lg">ClearMind</span>
         </div>
-        <span class="text-sm text-gray-500">
+        <button 
+          on:click={() => navigator.clipboard.writeText(`${window.location.origin}?user=${userId}`)}
+          class="text-sm text-gray-500 hover:text-gray-700"
+          title="Copy shareable URL"
+        >
           {#if userId}
-            ID: {userId.slice(0, 8)}
+            📋 ID: {userId.slice(0, 8)}
           {/if}
-        </span>
+        </button>
       </div>
     </div>
   </header>
