@@ -37,18 +37,21 @@
   $: currentComponent = navigationItems.find(nav => nav.id === $navigation.currentTab)?.component;
 </script>
 
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen" style="background-color: var(--color-zen-50);">
   <!-- Header -->
-  <header class="bg-white border-b border-gray-200">
+  <header class="bg-white border-b" style="border-color: var(--color-border-light);">
     <div class="container-zen">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center space-x-2">
           <span class="text-2xl">🧠</span>
-          <span class="font-semibold text-lg">ClearMind</span>
+          <span class="font-semibold text-lg" style="color: var(--color-zen-900);">ClearMind</span>
         </div>
         <button 
           on:click={() => navigator.clipboard.writeText(`${window.location.origin}?user=${userId}`)}
-          class="text-sm text-gray-500 hover:text-gray-700"
+          class="text-sm transition-colors"
+          style="color: var(--color-zen-500);"
+          onmouseover="this.style.color='var(--color-zen-700)'"
+          onmouseout="this.style.color='var(--color-zen-500)'"
           title="Copy shareable URL"
         >
           {#if userId}
@@ -60,14 +63,13 @@
   </header>
   
   <!-- Navigation -->
-  <nav class="bg-white border-b border-gray-100 sticky top-0 z-10">
+  <nav class="bg-white/50 backdrop-blur-sm border-b sticky top-0 z-10" style="border-color: var(--color-border-light);">
     <div class="container-zen">
-      <div class="flex space-x-1">
+      <div class="flex space-x-1 py-2">
         {#each navigationItems as item}
           <button 
             on:click={() => navigation.setTab(item.id)}
-            class="flex items-center px-4 py-3 text-sm font-medium rounded-t-lg
-                   transition-all duration-200
+            class="tab-nav
                    {$navigation.currentTab === item.id ? 'tab-active' : 'tab-inactive'}"
           >
             <span class="text-lg mr-2">{item.emoji}</span>
@@ -80,8 +82,10 @@
   
   <!-- Main Content -->
   <main class="container-zen py-8">
-    {#if currentComponent}
-      <svelte:component this={currentComponent} {userId} />
-    {/if}
+    <div class="animate-fade-in space-zen-md">
+      {#if currentComponent}
+        <svelte:component this={currentComponent} {userId} />
+      {/if}
+    </div>
   </main>
 </div>

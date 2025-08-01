@@ -88,20 +88,31 @@
     : [...contextualPrompts, ...prompts.slice(0, 3)];
 </script>
 
-<div class="border-t border-gray-200 p-4">
-  <h3 class="text-sm font-medium text-gray-700 mb-3">Quick Prompts</h3>
+<!-- Colorful Dashboard Quick Prompts -->
+<div class="p-6 bg-gray-50">
+  <div class="flex items-center gap-3 mb-4">
+    <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg">
+      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    </div>
+    <h3 class="text-lg font-semibold text-gray-900">Quick Prompts</h3>
+  </div>
   
-  <div class="space-y-2">
-    {#each displayPrompts as prompt}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {#each displayPrompts as prompt, index}
       <button
         on:click={() => usePrompt(prompt)}
-        class="w-full text-left p-3 rounded-lg border border-gray-200 
-               hover:border-blue-300 hover:bg-blue-50 transition-colors group"
+        class="text-left p-4 rounded-xl transition-all duration-200 group hover:scale-105 hover:-translate-y-1 shadow-lg"
+        style="background: {index % 4 === 0 ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : 
+                           index % 4 === 1 ? 'linear-gradient(135deg, #ec4899, #f43f5e)' : 
+                           index % 4 === 2 ? 'linear-gradient(135deg, #10b981, #059669)' :
+                           'linear-gradient(135deg, #f59e0b, #d97706)'};"
       >
-        <p class="font-medium text-sm group-hover:text-blue-600">
+        <p class="font-semibold text-sm mb-2 text-white">
           {prompt.title}
         </p>
-        <p class="text-xs text-gray-600 mt-1">
+        <p class="text-sm leading-relaxed text-white/90">
           {prompt.prompt}
         </p>
       </button>
@@ -111,9 +122,9 @@
   {#if prompts.length > 3}
     <button
       on:click={() => showAll = !showAll}
-      class="mt-3 text-sm text-blue-600 hover:text-blue-700"
+      class="mt-4 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:shadow-md"
     >
-      {showAll ? 'Show less' : `Show ${prompts.length - 3} more`}
+      {showAll ? '▲ Show Less' : `▼ Show ${prompts.length - 3} More`}
     </button>
   {/if}
 </div>

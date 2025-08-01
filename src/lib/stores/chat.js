@@ -131,18 +131,17 @@ function createChatStore() {
     
     async sendMessage(message, userId) {
       let state = get(chatStore);
+      let currentSession = state.currentSession;
       
       // Create session if none exists
-      if (!state.currentSession) {
+      if (!currentSession) {
         console.log('🔍 DEBUG: No current session, creating new one...');
-        const session = await store.createSession(userId);
-        if (!session) {
+        currentSession = await store.createSession(userId);
+        if (!currentSession) {
           console.error('🚨 DEBUG: Failed to create session');
           return;
         }
-        console.log('✅ DEBUG: Session created:', session);
-        // Get updated state after session creation
-        state = get(chatStore);
+        console.log('✅ DEBUG: Session created:', currentSession);
       }
       
       // Add user message to UI
@@ -164,7 +163,7 @@ function createChatStore() {
         await supabase
           .from('chat_messages')
           .insert({
-            session_id: state.currentSession.id,
+            session_id: currentSession.id,
             role: 'user',
             content: message
           });
@@ -174,8 +173,8 @@ function createChatStore() {
       
       // Get AI response
       try {
-        const sessionContextType = state.currentSession?.context_type || 'general';
-        const sessionContextData = state.currentSession?.context_data || {};
+        const sessionContextType = currentSession?.context_type || 'general';
+        const sessionContextData = currentSession?.context_data || {};
         const currentMessages = get(chatStore).messages;
         
         // Generate intelligent system prompt using context provider
@@ -213,7 +212,7 @@ function createChatStore() {
         await supabase
           .from('chat_messages')
           .insert({
-            session_id: state.currentSession.id,
+            session_id: currentSession.id,
             role: 'assistant',
             content: assistantMessage.content
           });
@@ -224,7 +223,7 @@ function createChatStore() {
           await supabase
             .from('chat_sessions')
             .update({ title })
-            .eq('id', state.currentSession.id);
+            .eq('id', currentSession.id);
         }
         
         update(s => ({ ...s, streaming: false }));
