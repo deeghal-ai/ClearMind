@@ -6,17 +6,17 @@ export const FEED_SOURCES = {
     category: 'news',
     description: 'Latest AI/ML discussions from Hacker News'
   },
-  'ArXiv CS.AI': {
-    url: 'http://export.arxiv.org/rss/cs.AI',
-    type: 'rss', 
+  'MIT Technology Review AI': {
+    url: 'https://www.technologyreview.com/topic/artificial-intelligence/feed/',
+    type: 'rss',
     category: 'research',
-    description: 'Recent AI research papers from ArXiv'
+    description: 'Latest AI research and industry insights from MIT'
   },
-  'ArXiv CS.LG': {
-    url: 'http://export.arxiv.org/rss/cs.LG',
+  'Towards Data Science': {
+    url: 'https://towardsdatascience.com/feed',
     type: 'rss',
     category: 'research', 
-    description: 'Machine Learning papers from ArXiv'
+    description: 'AI/ML articles and tutorials from Medium'
   },
   'Reddit r/MachineLearning': {
     url: 'https://www.reddit.com/r/MachineLearning/.rss',

@@ -137,24 +137,24 @@
     transition: all 0.2s ease;
   }
 
-  /* Dashboard Purple Button Styles */
+  /* Dashboard Teal Button Styles */
   .btn-primary {
     @apply px-5 py-2.5 text-white rounded-lg font-medium text-sm;
-    background: linear-gradient(135deg, var(--purple-600), var(--purple-700));
+    background: linear-gradient(135deg, #14B8A6, #0F766E);
     box-shadow: 
-      0 4px 12px rgba(99, 102, 241, 0.25),
-      0 2px 4px rgba(99, 102, 241, 0.1),
+      0 4px 12px rgba(20, 184, 166, 0.25),
+      0 2px 4px rgba(20, 184, 166, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
     border: none;
   }
 
   .btn-primary:hover {
-    background: linear-gradient(135deg, var(--purple-500), var(--purple-600));
+    background: linear-gradient(135deg, #0D9488, #065F46);
     transform: translateY(-2px);
     box-shadow: 
-      0 8px 25px rgba(99, 102, 241, 0.35),
-      0 4px 12px rgba(99, 102, 241, 0.2),
+      0 8px 25px rgba(20, 184, 166, 0.35),
+      0 4px 12px rgba(20, 184, 166, 0.2),
       inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 

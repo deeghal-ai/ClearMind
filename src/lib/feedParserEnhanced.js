@@ -109,26 +109,44 @@ export async function fetchFeedWithFallbacks(sourceName) {
   
   const errors = [];
   const strategies = [
-    // Strategy 1: RSS2JSON service
+    // Strategy 1: RSS2JSON service with better error handling
     async () => {
       const proxyUrl = 'https://api.rss2json.com/v1/api.json?rss_url=';
-      const response = await fetch(proxyUrl + encodeURIComponent(source.url), {
-        timeout: 8000
-      });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
       
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      
-      const data = await response.json();
-      if (data.status !== 'ok') throw new Error(data.message || 'RSS2JSON error');
-      
-      return data.items.slice(0, 15).map(item => ({
-        title: item.title || 'Untitled',
-        link: item.link || item.url || '',
-        description: cleanHTML(item.description || item.content || ''),
-        pubDate: parseRSSDate(item.pubDate || item.isoDate),
-        guid: item.guid || item.link || Math.random().toString(),
-        author: item.author
-      }));
+      try {
+        const response = await fetch(proxyUrl + encodeURIComponent(source.url), {
+          signal: controller.signal,
+          headers: {
+            'User-Agent': 'LearningOS/1.0 RSS Reader'
+          }
+        });
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        
+        const data = await response.json();
+        if (data.status !== 'ok') {
+          throw new Error(data.message || `RSS2JSON error: ${data.status}`);
+        }
+        
+        if (!data.items || data.items.length === 0) {
+          throw new Error('No items found in feed');
+        }
+        
+        return data.items.slice(0, 15).map(item => ({
+          title: item.title || 'Untitled',
+          link: item.link || item.url || '',
+          description: cleanHTML(item.description || item.content || ''),
+          pubDate: parseRSSDate(item.pubDate || item.isoDate),
+          guid: item.guid || item.link || Math.random().toString(),
+          author: item.author
+        }));
+      } catch (error) {
+        clearTimeout(timeoutId);
+        throw error;
+      }
     },
     
     // Strategy 2: AllOrigins proxy
@@ -147,40 +165,97 @@ export async function fetchFeedWithFallbacks(sourceName) {
     // Strategy 3: RSS-to-JSON serverless
     async () => {
       const proxyUrl = 'https://rss-to-json-serverless-api.vercel.app/api?url=';
-      const response = await fetch(proxyUrl + encodeURIComponent(source.url), {
-        timeout: 8000
-      });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
       
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      try {
+        const response = await fetch(proxyUrl + encodeURIComponent(source.url), {
+          signal: controller.signal,
+          headers: {
+            'User-Agent': 'LearningOS/1.0 RSS Reader'
+          }
+        });
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        
+        const data = await response.json();
+        if (!data.items || data.items.length === 0) {
+          throw new Error('No items found in response');
+        }
+        
+        return data.items.slice(0, 15).map(item => ({
+          title: item.title || 'Untitled',
+          link: item.link || '',
+          description: cleanHTML(item.description || ''),
+          pubDate: parseRSSDate(item.pubDate),
+          guid: item.guid || item.link || Math.random().toString(),
+          author: item.author
+        }));
+      } catch (error) {
+        clearTimeout(timeoutId);
+        throw error;
+      }
+    },
+    
+    // Strategy 4: Direct CORS proxy attempt
+    async () => {
+      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
       
-      const data = await response.json();
-      if (!data.items) throw new Error('Invalid response format');
-      
-      return data.items.slice(0, 15).map(item => ({
-        title: item.title || 'Untitled',
-        link: item.link || '',
-        description: cleanHTML(item.description || ''),
-        pubDate: parseRSSDate(item.pubDate),
-        guid: item.guid || item.link || Math.random().toString(),
-        author: item.author
-      }));
+      try {
+        const response = await fetch(proxyUrl + source.url, {
+          signal: controller.signal,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'User-Agent': 'LearningOS/1.0 RSS Reader'
+          }
+        });
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        
+        const xmlText = await response.text();
+        if (!xmlText || xmlText.length < 100) {
+          throw new Error('Invalid or empty XML response');
+        }
+        
+        const items = await parseRSSXML(xmlText, source.url);
+        if (!items || items.length === 0) {
+          throw new Error('No items parsed from XML');
+        }
+        
+        return items;
+      } catch (error) {
+        clearTimeout(timeoutId);
+        throw error;
+      }
     }
   ];
   
   // Try each strategy
   for (let i = 0; i < strategies.length; i++) {
     try {
+      console.log(`🔄 Trying strategy ${i + 1} for ${sourceName}: ${source.url}`);
       const items = await strategies[i]();
       if (items && items.length > 0) {
+        console.log(`✅ Strategy ${i + 1} succeeded for ${sourceName}: ${items.length} items`);
         return items;
+      } else {
+        errors.push(`Strategy ${i + 1}: No items returned`);
       }
     } catch (error) {
-      errors.push(`Strategy ${i + 1}: ${error.message}`);
+      const errorMsg = `Strategy ${i + 1}: ${error.message}`;
+      console.warn(`❌ ${errorMsg} for ${sourceName}`);
+      errors.push(errorMsg);
       continue;
     }
   }
   
-  throw new Error(`All strategies failed for ${sourceName}:\n${errors.join('\n')}`);
+  const finalError = `🚨 ALL STRATEGIES FAILED for "${sourceName}" (${source.url}):\n${errors.map((err, idx) => `  ${idx + 1}. ${err}`).join('\n')}`;
+  console.error(finalError);
+  throw new Error(finalError);
 }
 
 // Fetch all feeds with enhanced error handling

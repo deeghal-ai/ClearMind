@@ -54,7 +54,7 @@
   <!-- Left Sidebar Navigation -->
   <aside class="w-64 min-h-screen flex flex-col" style="background: linear-gradient(180deg, #14B8A6, #0F766E); border-right: 1px solid rgba(255,255,255,0.1);">
     <!-- Logo Section -->
-    <div class="p-6 border-b" style="border-color: rgba(255,255,255,0.1);">
+    <div class="px-6 pt-4 pb-6 border-b" style="border-color: rgba(255,255,255,0.1);">
       <div class="flex items-center space-x-3">
         <img src="/clearmind.png" alt="ClearMind Logo" class="w-32 h-32" />
 
@@ -100,38 +100,27 @@
   <!-- Main Content Area -->
   <main class="flex-1 overflow-auto flex flex-col">
     <!-- App Header -->
-    <header class="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 px-8 py-4">
+    <header class="bg-gradient-to-r from-white via-gray-50/95 to-white backdrop-blur-sm border-b border-gray-300/60 px-8 py-6 shadow-sm">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span class="text-sm font-medium text-gray-700">
-              {$navigation.currentTab.charAt(0).toUpperCase() + $navigation.currentTab.slice(1)}
-            </span>
-          </div>
-          
-          {#if userId}
-            <div class="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full">
-              <svg class="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <span class="text-xs font-mono text-gray-600">{userId.slice(0, 8)}</span>
-            </div>
-          {/if}
+          <div class="w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-pulse shadow-sm"></div>
+          <span class="text-lg font-semibold text-gray-800 tracking-wide">
+            {$navigation.currentTab.charAt(0).toUpperCase() + $navigation.currentTab.slice(1)}
+          </span>
         </div>
         
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-4">
           <!-- Future buttons will go here -->
-          <div class="flex items-center gap-2 text-xs text-gray-500">
-            <div class="w-1 h-1 bg-gray-400 rounded-full"></div>
-            <span>AI-Powered Learning</span>
+          <div class="flex items-center gap-3 px-3 py-1.5 bg-gradient-to-r from-teal-50 to-cyan-50 rounded-full border border-teal-200/50">
+            <div class="w-2 h-2 bg-gradient-to-r from-teal-400 to-cyan-500 rounded-full animate-pulse"></div>
+            <span class="text-sm font-medium text-teal-700">AI-Powered Learning</span>
           </div>
         </div>
       </div>
     </header>
     
     <!-- Page Content -->
-    <div class="flex-1 p-8">
+    <div class="flex-1 px-8 pt-4 pb-8">
       <div class="animate-fade-in space-zen-md">
         {#if currentComponent}
           <svelte:component this={currentComponent} {userId} />
@@ -147,9 +136,9 @@
   {#if !$chatPanel.isOpen}
     <button
       on:click={() => chatPanel.open()}
-      class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 
+      class="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-teal-500 to-teal-700 
              text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 
-             flex items-center justify-center z-40"
+             flex items-center justify-center z-40 hover:from-teal-400 hover:to-teal-600"
       title="Open AI Chat (Cmd/Ctrl + /)"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
