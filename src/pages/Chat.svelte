@@ -197,10 +197,10 @@
           </button>
           
           <div class="flex items-center gap-3">
-            <!-- Premium Purple AI Icon -->
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            <!-- Beautiful Sparkle AI Icon -->
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-700 shadow-lg">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             </div>
             <div>
@@ -239,11 +239,11 @@
         <!-- Clean Dashboard Empty State -->
         <div class="p-8 text-center">
           {#if $currentContext.type === 'roadmap'}
-            <div class="mb-6 p-4 rounded-xl bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-lg max-w-md mx-auto">
+            <div class="mb-6 p-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg max-w-md mx-auto">
               <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                 </div>
                 <div class="text-left">
@@ -256,10 +256,10 @@
             </div>
           {/if}
           
-          <!-- Dashboard Welcome -->
-          <div class="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center mb-6 bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg">
-            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          <!-- Beautiful Geometric Welcome Icon -->
+          <div class="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-6 bg-gradient-to-br from-blue-600 to-blue-700 shadow-lg">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
           <h3 class="text-2xl font-bold text-gray-900 mb-2">Start a conversation</h3>
@@ -291,9 +291,9 @@
         <div class="flex items-center justify-between">
           <!-- Compact Header -->
           <div class="flex items-center gap-2">
-            <div class="w-6 h-6 rounded-lg flex items-center justify-center bg-gradient-to-br from-purple-500 to-purple-600">
+            <div class="w-6 h-6 rounded-lg flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-700">
               <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
             </div>
             <span class="text-sm font-medium text-gray-700">Context</span>
@@ -364,7 +364,7 @@
               placeholder="Ask me anything..."
               rows="1"
               disabled={$chatStore.streaming}
-              class="w-full px-4 py-3 rounded-xl resize-none transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              class="w-full px-4 py-3 rounded-xl resize-none transition-all disabled:opacity-50 disabled:cursor-not-allowed bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               style="min-height: 48px; max-height: 200px;"
             />
           </div>
@@ -372,11 +372,8 @@
           <button
             type="submit"
             disabled={!inputValue.trim() || $chatStore.streaming}
-            on:click={() => {
-              console.log('🔍 DEBUG Chat.svelte: Send button clicked');
-              console.log('🔍 DEBUG Chat.svelte: Button disabled?', !inputValue.trim() || $chatStore.streaming);
-            }}
-            class="px-6 py-3 rounded-xl font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-500 hover:to-purple-600 hover:scale-105 shadow-lg hover:shadow-xl text-sm"
+            on:click={sendMessage}
+            class="px-6 py-3 rounded-xl font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-400 hover:to-blue-500 hover:scale-105 shadow-lg hover:shadow-xl text-sm"
           >
             {#if $chatStore.streaming}
               <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

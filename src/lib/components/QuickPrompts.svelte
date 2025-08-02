@@ -9,6 +9,7 @@
   
   let prompts = [];
   let showAll = false;
+  let isCollapsed = false;
   
   onMount(async () => {
     // Load saved prompts
@@ -81,6 +82,10 @@
       }
     }
   }
+
+  function toggleCollapse() {
+    isCollapsed = !isCollapsed;
+  }
   
   $: contextualPrompts = getContextualPrompts();
   $: displayPrompts = showAll 
@@ -88,43 +93,72 @@
     : [...contextualPrompts, ...prompts.slice(0, 3)];
 </script>
 
-<!-- Colorful Dashboard Quick Prompts -->
-<div class="p-6 bg-gray-50">
-  <div class="flex items-center gap-3 mb-4">
-    <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg">
-      <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
+<!-- Compact & Subtle Quick Prompts -->
+<div class="border-t border-gray-100">
+  <!-- Collapsible Header -->
+  <div class="px-4 py-2 bg-white flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-5 h-5 rounded-lg flex items-center justify-center bg-blue-100">
+        <svg class="w-3 h-3 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      </div>
+      <h3 class="text-sm font-medium text-blue-800">Quick Prompts</h3>
+      <span class="text-xs text-blue-600">({displayPrompts.length})</span>
     </div>
-    <h3 class="text-lg font-semibold text-gray-900">Quick Prompts</h3>
-  </div>
-  
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    {#each displayPrompts as prompt, index}
-      <button
-        on:click={() => usePrompt(prompt)}
-        class="text-left p-4 rounded-xl transition-all duration-200 group hover:scale-105 hover:-translate-y-1 shadow-lg"
-        style="background: {index % 4 === 0 ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : 
-                           index % 4 === 1 ? 'linear-gradient(135deg, #ec4899, #f43f5e)' : 
-                           index % 4 === 2 ? 'linear-gradient(135deg, #10b981, #059669)' :
-                           'linear-gradient(135deg, #f59e0b, #d97706)'};"
-      >
-        <p class="font-semibold text-sm mb-2 text-white">
-          {prompt.title}
-        </p>
-        <p class="text-sm leading-relaxed text-white/90">
-          {prompt.prompt}
-        </p>
-      </button>
-    {/each}
-  </div>
-  
-  {#if prompts.length > 3}
+    
     <button
-      on:click={() => showAll = !showAll}
-      class="mt-4 px-4 py-2 rounded-lg text-sm font-medium transition-all bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:shadow-md"
+      on:click={toggleCollapse}
+      class="p-1 rounded-md hover:bg-blue-50 transition-colors"
     >
-      {showAll ? '▲ Show Less' : `▼ Show ${prompts.length - 3} More`}
+      <svg class="w-4 h-4 text-blue-500 transition-transform {isCollapsed ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
     </button>
+  </div>
+  
+  <!-- Collapsible Content -->
+  {#if !isCollapsed}
+    <div class="px-4 pb-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {#each displayPrompts as prompt, index}
+          <button
+            on:click={() => usePrompt(prompt)}
+            class="text-left p-3 rounded-lg transition-all duration-200 hover:scale-[1.01] hover:-translate-y-0.5 border group {index % 4 === 0 ? 'bg-blue-50 border-blue-200 hover:bg-blue-100' : 
+                              index % 4 === 1 ? 'bg-pink-50 border-pink-200 hover:bg-pink-100' : 
+                              index % 4 === 2 ? 'bg-green-50 border-green-200 hover:bg-green-100' :
+                              'bg-amber-50 border-amber-200 hover:bg-amber-100'}"
+          >
+            <div class="flex items-start gap-2">
+              <div class="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5 {index % 4 === 0 ? 'bg-blue-200 text-blue-700' : 
+                              index % 4 === 1 ? 'bg-pink-200 text-pink-700' : 
+                              index % 4 === 2 ? 'bg-green-200 text-green-700' :
+                              'bg-amber-200 text-amber-700'}">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </div>
+              <div class="min-w-0 flex-1">
+                <p class="font-medium text-xs mb-1 text-gray-800 leading-tight">
+                  {prompt.title}
+                </p>
+                <p class="text-xs text-gray-600 leading-snug line-clamp-2">
+                  {prompt.prompt}
+                </p>
+              </div>
+            </div>
+          </button>
+        {/each}
+      </div>
+      
+      {#if prompts.length > 3}
+        <button
+          on:click={() => showAll = !showAll}
+          class="mt-2 px-3 py-1 rounded-full text-xs font-medium transition-all bg-blue-100 text-blue-700 hover:bg-blue-200"
+        >
+          {showAll ? '▲ Less' : `▼ ${prompts.length - 3} More`}
+        </button>
+      {/if}
+    </div>
   {/if}
 </div>

@@ -297,7 +297,7 @@
   }
 </script>
 
-<div class="space-y-6">
+<div class="space-y-3">
   {#if $roadmapStore.loading}
     <!-- Loading State -->
     <div class="space-y-4">
@@ -334,50 +334,50 @@
       </p>
     </div>
 
-    <!-- Statistics Overview -->
+    <!-- Compact Statistics Overview -->
     {#if statistics && (statistics.roadmapsStarted > 0 || statistics.totalStagesCompleted > 0)}
-      <div class="card-zen bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-        <h2 class="font-semibold mb-3">📊 Your Learning Progress</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="card-zen p-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+        <h2 class="font-medium text-sm mb-2 text-gray-700">📊 Learning Progress</h2>
+        <div class="grid grid-cols-4 gap-3">
           <div class="text-center">
-            <div class="text-2xl font-bold text-blue-600">{statistics.roadmapsStarted}</div>
-            <div class="text-sm text-gray-600">Started</div>
+            <div class="text-lg font-bold text-blue-600">{statistics.roadmapsStarted}</div>
+            <div class="text-xs text-gray-600">Started</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-green-600">{statistics.roadmapsCompleted}</div>
-            <div class="text-sm text-gray-600">Completed</div>
+            <div class="text-lg font-bold text-green-600">{statistics.roadmapsCompleted}</div>
+            <div class="text-xs text-gray-600">Completed</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-purple-600">{statistics.totalStagesCompleted}</div>
-            <div class="text-sm text-gray-600">Stages Done</div>
+            <div class="text-lg font-bold text-purple-600">{statistics.totalStagesCompleted}</div>
+            <div class="text-xs text-gray-600">Stages</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-orange-600">{Math.round(statistics.averageCompletion)}%</div>
-            <div class="text-sm text-gray-600">Avg Progress</div>
+            <div class="text-lg font-bold text-orange-600">{Math.round(statistics.averageCompletion)}%</div>
+            <div class="text-xs text-gray-600">Avg</div>
           </div>
         </div>
       </div>
     {/if}
 
-    <!-- Search and Filters -->
-    <div class="card-zen">
-      <div class="flex flex-col sm:flex-row gap-4">
+    <!-- Compact Search and Filters -->
+    <div class="card-zen p-3">
+      <div class="flex gap-3">
         <div class="flex-1">
           <input
             type="text"
             bind:value={searchTerm}
-            placeholder="Search roadmaps by name, description, or tags..."
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Search roadmaps..."
+            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
-        <div class="sm:w-48">
+        <div class="w-40">
           <select 
             bind:value={filterDifficulty}
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             {#each difficulties as difficulty}
               <option value={difficulty}>
-                {difficulty === 'all' ? 'All Difficulties' : difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+                {difficulty === 'all' ? 'All' : difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
               </option>
             {/each}
           </select>
@@ -386,7 +386,7 @@
     </div>
 
     <!-- Roadmap Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {#if filteredRoadmaps.length === 0}
         <div class="col-span-full card-zen text-center py-8">
           <p class="text-gray-500 text-sm">No roadmaps match your search criteria.</p>
@@ -505,91 +505,91 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
         <!-- Main Content -->
-        <div class="lg:col-span-2 space-y-6">
-          <!-- Progress Overview -->
+        <div class="lg:col-span-3 space-y-3">
+          <!-- Compact Progress Overview -->
           {#if $currentProgress}
-            <div class="card-zen bg-gradient-to-r from-blue-50 to-green-50 border-blue-200">
-              <div class="flex items-center justify-between mb-3">
-                <h2 class="font-semibold text-gray-800">Progress Overview</h2>
-                <span class="text-sm text-gray-600">
-                  <span>{$currentProgress?.completed_stages || 0}/{$currentProgress?.total_stages || 0} stages ({$currentProgress?.percentage || 0}%)</span>
+            <div class="card-zen p-3 bg-gradient-to-r from-blue-50 to-green-50 border-blue-200">
+              <div class="flex items-center justify-between mb-2">
+                <h2 class="font-medium text-sm text-gray-800">Progress</h2>
+                <span class="text-xs text-gray-600">
+                  {$currentProgress?.completed_stages || 0}/{$currentProgress?.total_stages || 0} stages ({$currentProgress?.percentage || 0}%)
                 </span>
               </div>
-              <div class="w-full bg-gray-200 rounded-full h-3">
+              <div class="w-full bg-gray-200 rounded-full h-2">
                 <div 
-                  class="bg-gradient-to-r from-blue-500 to-green-500 h-3 rounded-full transition-all duration-500"
+                  class="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full transition-all duration-500"
                   style="width: {$currentProgress?.percentage || 0}%"
                 />
               </div>
             </div>
 
-            <!-- Next Stage Suggestion -->
+            <!-- Compact Next Stage -->
             {#if $roadmapStore.selectedRoadmap && $currentProgress}
               {@const nextStage = getNextStage()}
               {#if nextStage}
-              <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                <div class="flex items-center gap-2 text-yellow-800 text-sm">
+              <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-2">
+                <div class="flex items-center gap-2 text-yellow-800 text-xs">
                   <span>🎯</span>
-                  <span class="font-medium">Next up: {nextStage.title}</span>
+                  <span class="font-medium">Next: {nextStage.title}</span>
                   <span class="text-yellow-600">({nextStage.estimatedTime})</span>
                 </div>
               </div>
               {:else}
-              <div class="bg-green-50 border border-green-200 rounded-lg p-3">
-                <div class="flex items-center gap-2 text-green-800 text-sm">
+              <div class="bg-green-50 border border-green-200 rounded-lg p-2">
+                <div class="flex items-center gap-2 text-green-800 text-xs">
                   <span>🎉</span>
-                  <span class="font-medium">Congratulations! You've completed this roadmap!</span>
+                  <span class="font-medium">Roadmap completed!</span>
                 </div>
               </div>
               {/if}
             {/if}
           {/if}
 
-          <!-- Stages -->
-          <div class="space-y-4">
-            <h3 class="font-semibold text-gray-700">Learning Stages</h3>
+          <!-- Compact Stages -->
+          <div class="space-y-2">
+            <h3 class="font-medium text-sm text-gray-700">Learning Stages</h3>
             
             {#each $roadmapStore.selectedRoadmap.stages as stage, index}
               {@const stageProgress = getCurrentStageProgress(index)}
-              <div class="card-zen transition-all duration-200 {stageProgress.completed ? 'bg-green-50 border-green-200' : ''}">
-                <!-- Stage Header -->
-                <div class="flex items-start gap-4">
-                  <div class="flex-shrink-0 pt-1">
+              <div class="card-zen p-3 transition-all duration-200 {stageProgress.completed ? 'bg-green-50 border-green-200' : 'hover:bg-gray-50'}">
+                <!-- Compact Stage Header -->
+                <div class="flex items-start gap-3">
+                  <div class="flex-shrink-0 pt-0.5">
                     <input 
                       type="checkbox"
                       checked={stageProgress.completed}
                       on:change={() => toggleStage(index)}
-                      class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500"
+                      class="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
                     />
                   </div>
                   
                   <div class="flex-1 min-w-0">
-                    <!-- Stage Title and Info -->
-                    <div class="flex items-start justify-between mb-2">
+                    <!-- Compact Stage Title and Info -->
+                    <div class="flex items-start justify-between">
                       <div class="flex-1">
-                        <h4 class="font-medium text-gray-900 flex items-center gap-2">
+                        <h4 class="font-medium text-sm text-gray-900 flex items-center gap-2">
                           <span>{index + 1}. {stage.title}</span>
                           {#if stageProgress.hasNote}
-                            <span class="text-blue-500" title="Has notes">📝</span>
+                            <span class="text-blue-500 text-xs" title="Has notes">📝</span>
                           {/if}
                         </h4>
-                        <p class="text-sm text-gray-600 mt-1">{stage.description}</p>
+                        <p class="text-xs text-gray-600 mt-0.5 line-clamp-2">{stage.description}</p>
                         {#if stage.estimatedTime}
-                          <p class="text-xs text-gray-500 mt-2">
-                            ⏱️ Estimated time: {formatEstimatedTime(stage.estimatedTime)}
+                          <p class="text-xs text-gray-500 mt-1">
+                            ⏱️ {formatEstimatedTime(stage.estimatedTime)}
                           </p>
                         {/if}
                       </div>
                       
-                      <div class="flex items-center gap-2 ml-4">
+                      <div class="flex items-center gap-1 ml-3">
                         <button
                           on:click={() => openNoteModal(stage.id)}
                           class="p-1 text-gray-400 hover:text-blue-600 transition-colors"
                           title="Add note"
                         >
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                           </svg>
                         </button>
@@ -599,7 +599,7 @@
                           class="p-1 text-gray-400 hover:text-gray-600 transition-colors"
                         >
                           <svg 
-                            class="w-4 h-4 transform transition-transform {expandedStages.has(index) ? 'rotate-180' : ''}" 
+                            class="w-3 h-3 transform transition-transform {expandedStages.has(index) ? 'rotate-180' : ''}" 
                             fill="none" 
                             stroke="currentColor" 
                             viewBox="0 0 24 24"
@@ -610,16 +610,16 @@
                       </div>
                     </div>
 
-                    <!-- Expanded Content -->
+                    <!-- Compact Expanded Content -->
                     {#if expandedStages.has(index)}
-                      <div class="mt-4 space-y-4">
-                        <!-- Learning Objectives -->
+                      <div class="mt-2 space-y-2">
+                        <!-- Compact Learning Objectives -->
                         {#if stage.learningObjectives && stage.learningObjectives.length > 0}
                           <div>
-                            <h5 class="font-medium text-sm text-gray-700 mb-2">Learning Objectives:</h5>
-                            <ul class="space-y-1">
+                            <h5 class="font-medium text-xs text-gray-700 mb-1">Learning Objectives:</h5>
+                            <ul class="space-y-0.5">
                               {#each stage.learningObjectives as objective}
-                                <li class="flex items-start gap-2 text-sm text-gray-600">
+                                <li class="flex items-start gap-1 text-xs text-gray-600">
                                   <span class="text-blue-500 mt-0.5">•</span>
                                   <span>{objective}</span>
                                 </li>

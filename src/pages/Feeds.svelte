@@ -18,6 +18,7 @@
   let collapsedSources = new Set();
   let showSettings = false;
   let autoRefreshInterval = null;
+  let viewMode = 'comfortable'; // 'comfortable' or 'compact'
   
   // Categories for filtering
   const categories = [
@@ -306,8 +307,8 @@
   </div>
   
   <!-- Enhanced Search and Filters -->
-  <div class="card-zen">
-    <div class="flex flex-col sm:flex-row gap-4">
+  <div class="card-zen p-4">
+    <div class="flex flex-col lg:flex-row gap-4">
       <!-- Search with icon -->
       <div class="flex-1 relative">
         <svg class="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -334,26 +335,50 @@
           {/each}
         </select>
       </div>
+
+      <!-- View Mode Toggle -->
+      <div class="flex bg-gray-100 rounded-lg p-1">
+        <button
+          on:click={() => viewMode = 'comfortable'}
+          class="px-3 py-1 rounded text-sm font-medium transition-all
+                 {viewMode === 'comfortable' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}"
+        >
+          Comfortable
+        </button>
+        <button
+          on:click={() => viewMode = 'compact'}
+          class="px-3 py-1 rounded text-sm font-medium transition-all
+                 {viewMode === 'compact' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}"
+        >
+          Compact
+        </button>
+      </div>
     </div>
   </div>
   
   <!-- Loading State -->
   {#if loading}
-    <div class="space-y-4">
-      {#each Array(3) as _}
-        <div class="card-zen">
+    <div class="grid gap-6 {viewMode === 'compact' ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2'}">
+      {#each Array(6) as _}
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
           <div class="animate-pulse">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-1 h-8 bg-gray-200 rounded-full"></div>
-              <div class="flex-1">
-                <div class="h-5 w-32 bg-gray-200 rounded"></div>
-                <div class="h-3 w-24 bg-gray-100 rounded mt-1"></div>
+            <!-- Header -->
+            <div class="p-4 border-b border-gray-100 bg-gray-50">
+              <div class="flex items-center gap-3">
+                <div class="w-1 h-8 bg-gray-300 rounded-full"></div>
+                <div class="flex-1">
+                  <div class="h-4 w-32 bg-gray-300 rounded mb-2"></div>
+                  <div class="h-3 w-24 bg-gray-200 rounded"></div>
+                </div>
               </div>
             </div>
-            <div class="space-y-3">
-              {#each Array(3) as _}
-                <div class="h-16 bg-gray-100 rounded"></div>
-              {/each}
+            <!-- Content -->
+            <div class="p-4 space-y-3">
+              <div class="h-4 w-full bg-gray-200 rounded"></div>
+              <div class="h-4 w-4/5 bg-gray-200 rounded"></div>
+              <div class="h-3 w-1/2 bg-gray-100 rounded"></div>
+              <div class="h-4 w-full bg-gray-200 rounded"></div>
+              <div class="h-4 w-3/4 bg-gray-200 rounded"></div>
             </div>
           </div>
         </div>
@@ -413,76 +438,96 @@
     </div>
   
   {:else}
-    <!-- Enhanced Feed Sources -->
-    {#each filteredFeeds as feed}
-      <div class="card-zen">
-        <!-- Source Header with enhanced info -->
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-3">
-            <button
-              on:click={() => toggleSource(feed.source)}
-              class="text-gray-400 hover:text-gray-600 transition-colors"
-            >
-              {collapsedSources.has(feed.source) ? '▶️' : '▼'}
-            </button>
-            
-            <div>
-              <h2 class="font-semibold text-gray-800">{feed.source}</h2>
-              <div class="flex items-center gap-2 mt-1">
-                <span class="text-xs px-2 py-1 rounded-full border {getCategoryColor(getFeedCategory(feed.source))}">
-                  {getFeedCategory(feed.source)}
-                </span>
-                <span class="text-xs text-gray-500">
-                  {feed.items.length} items
-                </span>
-                {#if feed.fetchedAt}
-                  <span class="text-xs text-gray-400">
-                    • {formatTimeAgo(feed.fetchedAt)}
-                  </span>
+    <!-- Beautiful Grid Layout -->
+    <div class="grid gap-6 {viewMode === 'compact' ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2'}">
+      {#each filteredFeeds as feed}
+        <div class="group bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+          <!-- Source Header -->
+          <div class="p-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div 
+                  class="w-1 h-8 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 transition-all group-hover:h-10"
+                ></div>
+                <div>
+                  <h3 class="font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">
+                    {feed.source}
+                  </h3>
+                  <div class="flex items-center gap-2 mt-1">
+                    <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700 font-medium">
+                      {getFeedCategory(feed.source)}
+                    </span>
+                    <span class="text-xs text-gray-500">
+                      {feed.success ? `${feed.items.length} articles` : 'Failed to load'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex items-center gap-2">
+                {#if feed.error}
+                  <div class="w-2 h-2 rounded-full bg-red-500" title={feed.error}></div>
+                {:else}
+                  <div class="w-2 h-2 rounded-full bg-green-500"></div>
                 {/if}
               </div>
             </div>
           </div>
           
-          <div class="flex items-center gap-2">
-            {#if feed.error}
-              <span class="text-red-500 text-sm" title={feed.error}>⚠️</span>
+          <!-- Feed Items -->
+          <div class="p-4">
+            {#if feed.success && feed.items.length > 0}
+              <div class="space-y-3">
+                {#each feed.items.slice(0, viewMode === 'compact' ? 3 : 4) as item}
+                  <a 
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block p-3 -mx-3 rounded-lg hover:bg-blue-50 transition-all duration-200 group/item border-l-2 border-transparent hover:border-blue-400"
+                  >
+                    <h4 class="font-medium text-gray-900 group-hover/item:text-blue-600 transition-colors leading-snug {viewMode === 'compact' ? 'text-sm' : 'text-base'} line-clamp-2">
+                      {item.title}
+                    </h4>
+                    
+                    {#if viewMode === 'comfortable' && item.description}
+                      <p class="text-sm text-gray-600 mt-1 leading-relaxed line-clamp-2">
+                        {item.description.replace(/<[^>]*>/g, '').slice(0, 120)}...
+                      </p>
+                    {/if}
+                    
+                    <div class="flex items-center justify-between text-xs text-gray-500 mt-2">
+                      <span class="font-medium">{formatTimeAgo(item.pubDate)}</span>
+                      {#if item.author}
+                        <span class="text-gray-400">by {item.author}</span>
+                      {/if}
+                    </div>
+                  </a>
+                {/each}
+                
+                {#if feed.items.length > (viewMode === 'compact' ? 3 : 4)}
+                  <div class="pt-2 border-t border-gray-100">
+                    <button 
+                      on:click={() => toggleSource(feed.source)}
+                      class="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors flex items-center gap-1"
+                    >
+                      {collapsedSources.has(feed.source) ? 'Show' : 'View'} {feed.items.length - (viewMode === 'compact' ? 3 : 4)} more articles
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </div>
+                {/if}
+              </div>
             {:else}
-              <span class="text-green-500 text-sm">✅</span>
+              <div class="text-center py-8">
+                <div class="text-gray-400 text-4xl mb-2">📰</div>
+                <p class="text-gray-500 text-sm">No articles available</p>
+              </div>
             {/if}
           </div>
         </div>
-        
-        <!-- Feed Items -->
-        {#if !collapsedSources.has(feed.source)}
-          <div class="space-y-3">
-            {#each feed.items as item}
-              <a 
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block p-3 -mx-3 rounded-lg hover:bg-gray-50 transition-colors group border-l-2 border-transparent hover:border-blue-300"
-              >
-                <h3 class="font-medium text-blue-600 group-hover:underline mb-1">
-                  {item.title}
-                </h3>
-                {#if item.description}
-                  <p class="text-sm text-gray-600 mb-2 line-clamp-2">
-                    {item.description}
-                  </p>
-                {/if}
-                <div class="flex items-center justify-between text-xs text-gray-400">
-                  <span>{formatTimeAgo(item.pubDate)}</span>
-                  {#if item.author}
-                    <span>by {item.author}</span>
-                  {/if}
-                </div>
-              </a>
-            {/each}
-          </div>
-        {/if}
-      </div>
-    {/each}
+      {/each}
+    </div>
   {/if}
 </div>
 
