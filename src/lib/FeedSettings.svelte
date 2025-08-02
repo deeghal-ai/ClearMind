@@ -1,75 +1,68 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { FEED_SOURCES } from './feedSources.js';
+  import { feedStorageService } from './services/feedStorageService.js';
   
   export let show = false;
+  export let userId = '';
   
   const dispatch = createEventDispatcher();
   
-  let sources = Object.entries(FEED_SOURCES).map(([key, source]) => ({
-    id: key,
-    ...source,
-    active: localStorage.getItem(`feed_${key}_disabled`) !== 'true'
-  }));
-  
+  let sources = [];
+  let loading = true;
   let newFeedName = '';
   let newFeedUrl = '';
   let addingFeed = false;
   
-  function toggleSource(sourceId) {
+  async function toggleSource(sourceId) {
     const source = sources.find(s => s.id === sourceId);
-    if (source) {
-      source.active = !source.active;
-      
-      // Save to localStorage
-      if (source.active) {
-        localStorage.removeItem(`feed_${sourceId}_disabled`);
-      } else {
-        localStorage.setItem(`feed_${sourceId}_disabled`, 'true');
-      }
-      
-      // Trigger reactivity
-      sources = sources;
+    if (!source) return;
+    
+    try {
+      const newState = await feedStorageService.toggleFeedState(userId, sourceId);
+      source.active = newState;
+      sources = sources; // Trigger reactivity
+      showToast(newState ? 'Feed enabled' : 'Feed disabled');
+    } catch (error) {
+      console.error('Failed to toggle feed:', error);
+      showToast('Failed to update feed');
     }
   }
   
-  function addCustomFeed() {
+  async function addCustomFeed() {
     if (!newFeedName.trim() || !newFeedUrl.trim()) return;
     
     addingFeed = true;
     
-    const customId = `custom_${Date.now()}`;
-    const customFeed = {
-      id: customId,
-      url: newFeedUrl.trim(),
-      type: 'rss',
-      category: 'custom',
-      description: `Custom feed: ${newFeedName.trim()}`,
-      active: true
-    };
-    
-    sources = [...sources, customFeed];
-    
-    // Save custom feeds to localStorage
-    const customFeeds = sources.filter(s => s.id.startsWith('custom_'));
-    localStorage.setItem('custom_feeds', JSON.stringify(customFeeds));
-    
-    // Reset form
-    newFeedName = '';
-    newFeedUrl = '';
-    addingFeed = false;
-    
-    showToast('Custom feed added successfully!');
+    try {
+      const newFeed = await feedStorageService.addCustomFeed(userId, {
+        name: newFeedName.trim(),
+        url: newFeedUrl.trim()
+      });
+      
+      sources = [...sources, newFeed];
+      
+      // Reset form
+      newFeedName = '';
+      newFeedUrl = '';
+      
+      showToast('Custom feed added successfully!');
+    } catch (error) {
+      console.error('Failed to add custom feed:', error);
+      showToast('Failed to add custom feed');
+    } finally {
+      addingFeed = false;
+    }
   }
   
-  function removeCustomFeed(sourceId) {
-    sources = sources.filter(s => s.id !== sourceId);
-    
-    // Update localStorage
-    const customFeeds = sources.filter(s => s.id.startsWith('custom_'));
-    localStorage.setItem('custom_feeds', JSON.stringify(customFeeds));
-    
-    showToast('Custom feed removed');
+  async function removeCustomFeed(sourceId) {
+    try {
+      await feedStorageService.removeCustomFeed(userId, sourceId);
+      sources = sources.filter(s => s.id !== sourceId);
+      showToast('Custom feed removed');
+    } catch (error) {
+      console.error('Failed to remove custom feed:', error);
+      showToast('Failed to remove custom feed');
+    }
   }
   
   function showToast(message) {
@@ -91,28 +84,27 @@
     dispatch('update'); // Trigger feeds refresh
   }
   
-  // Load custom feeds on component mount
-  function loadCustomFeeds() {
+  // Load all feeds from Supabase
+  async function loadFeeds() {
+    if (!userId) {
+      console.warn('No userId provided to FeedSettings');
+      loading = false;
+      return;
+    }
+    
     try {
-      const saved = localStorage.getItem('custom_feeds');
-      if (saved) {
-        const customFeeds = JSON.parse(saved);
-        const existingIds = new Set(sources.map(s => s.id));
-        
-        customFeeds.forEach(feed => {
-          if (!existingIds.has(feed.id)) {
-            sources.push(feed);
-          }
-        });
-        sources = sources;
-      }
+      loading = true;
+      sources = await feedStorageService.getFeedSources(userId);
     } catch (error) {
-      console.warn('Failed to load custom feeds:', error);
+      console.error('Failed to load feeds:', error);
+      showToast('Failed to load feeds');
+    } finally {
+      loading = false;
     }
   }
   
   $: if (show) {
-    loadCustomFeeds();
+    loadFeeds();
   }
 </script>
 

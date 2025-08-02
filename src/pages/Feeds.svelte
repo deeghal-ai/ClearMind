@@ -3,9 +3,10 @@
   import { fetchAllFeedsEnhanced, groupFeedsByCategory } from '../lib/feedParserEnhanced.js';
   import { getCachedFeeds, setCachedFeeds, clearFeedCache, getCacheAge } from '../lib/feedCache.js';
   import { getFeedCategory, getCategoryColor } from '../lib/feedSources.js';
+  import { feedStorageService } from '../lib/services/feedStorageService.js';
   import FeedSettings from '../lib/FeedSettings.svelte';
   
-  export const userId = '';
+  export let userId = '';
   
   let feeds = [];
   let loading = true;
@@ -66,9 +67,24 @@
         cacheAge = 0;
       }
       
-      // Filter out disabled feeds
+      // Filter out disabled feeds using Supabase
+      let enabledSources = [];
+      if (userId) {
+        try {
+          const userFeeds = await feedStorageService.getEnabledFeedSources(userId);
+          enabledSources = userFeeds.map(feed => feed.id);
+        } catch (error) {
+          console.error('Failed to get enabled feeds from database:', error);
+          // Fallback to showing all feeds if database query fails
+          enabledSources = feedData.feeds?.map(feed => feed.source) || [];
+        }
+      } else {
+        // No userId, show all feeds
+        enabledSources = feedData.feeds?.map(feed => feed.source) || [];
+      }
+      
       feeds = (feedData.feeds || []).filter(feed => {
-        return localStorage.getItem(`feed_${feed.source}_disabled`) !== 'true';
+        return enabledSources.includes(feed.source);
       });
       
       lastUpdated = feedData.timestamp;
@@ -534,6 +550,7 @@
 <!-- Feed Settings Modal -->
 <FeedSettings 
   bind:show={showSettings}
+  {userId}
   on:close={() => showSettings = false}
   on:update={() => loadFeeds(true)}
 />
