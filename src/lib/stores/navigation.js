@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { chatPanel } from './chatPanel.js';
 
 function createNavigationStore() {
   const { subscribe, set, update } = writable({
@@ -12,8 +13,9 @@ function createNavigationStore() {
       update(state => ({ ...state, currentTab: tabId }));
     },
     
+    // Updated to open chat panel instead of navigating to chat tab
     navigateToChat() {
-      update(state => ({ ...state, currentTab: 'chat' }));
+      chatPanel.open();
     }
   };
 }

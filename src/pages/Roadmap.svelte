@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { roadmapStore, currentProgress } from '../lib/stores/roadmap.js';
   import { navigation } from '../lib/stores/navigation.js';
+  import { chatPanel } from '../lib/stores/chatPanel.js';
   import { trackerStore } from '../lib/stores/tracker.js';
 
   export let userId;
@@ -257,13 +258,10 @@
       estimatedTime: currentStage?.estimatedTime
     };
     
-    // Save context to localStorage for the chat tab to pick up
-    localStorage.setItem('learningos_ai_context', JSON.stringify(context));
+    // Open chat panel with context
+    chatPanel.openWithContext(context);
     
-    // Navigate to chat tab
-    navigation.navigateToChat();
-    
-    showToast('Context saved! Switching to AI chat...', 'success');
+    showToast('Context loaded! AI chat opened.', 'success');
   }
 
   function askAIForStageHelp(stageIndex, stage) {
@@ -287,13 +285,10 @@
       learningObjectives: stage.learningObjectives
     };
     
-    // Save context to localStorage for the chat tab to pick up
-    localStorage.setItem('learningos_ai_context', JSON.stringify(context));
+    // Open chat panel with context
+    chatPanel.openWithContext(context);
     
-    // Navigate to chat tab
-    navigation.navigateToChat();
-    
-    showToast(`Context saved for "${stage.title}"! Switching to AI chat...`, 'success');
+    showToast(`Context loaded for "${stage.title}"! AI chat opened.`, 'success');
   }
 </script>
 
