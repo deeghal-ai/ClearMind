@@ -95,25 +95,25 @@
   }
 </script>
 
-<div class="max-w-6xl mx-auto p-4 space-y-6">
+<div class="w-full p-4 space-y-6">
   <!-- Header with streak info -->
-  <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-6">
+  <div class="card-zen">
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold mb-2">Daily Learning Tracker</h1>
-        <p class="opacity-90">Track your learning journey and build consistent habits</p>
+        <h1 class="heading-1 mb-2" style="color: var(--color-zen-900);">Daily Learning Tracker</h1>
+        <p class="text-secondary">Track your learning journey and build consistent habits</p>
       </div>
       <div class="text-right">
-        <div class="text-3xl font-bold">{$streakInfo.current}</div>
-        <div class="text-sm opacity-90">day streak</div>
-        <div class="text-xs opacity-75">Longest: {$streakInfo.longest} days</div>
+        <div class="text-3xl font-bold" style="color: var(--color-accent-primary);">{$streakInfo.current}</div>
+        <div class="text-sm" style="color: var(--color-zen-600);">day streak</div>
+        <div class="text-xs" style="color: var(--color-zen-500);">Longest: {$streakInfo.longest} days</div>
       </div>
     </div>
     
     {#if $todaysProgress.isComplete}
-      <div class="mt-4 p-3 bg-white bg-opacity-20 rounded-lg text-center">
+      <div class="mt-4 p-3 rounded-lg text-center" style="background-color: var(--color-zen-100); border: 1px solid var(--color-zen-200); color: var(--color-zen-800);">
         <div class="text-lg">🎉 Great work today!</div>
-        <div class="text-sm opacity-90">You've completed your goals and logged learning time</div>
+        <div class="text-sm" style="color: var(--color-zen-600);">You've completed your goals and logged learning time</div>
       </div>
     {/if}
   </div>
