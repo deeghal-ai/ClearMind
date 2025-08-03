@@ -81,19 +81,12 @@
     setTimeout(() => router.navigate('/'), 1000);
   }
   
-  // Add timeout to prevent infinite loading in production
-  let authTimeout = false;
-  onMount(() => {
-    setTimeout(() => {
-      authTimeout = true;
-    }, 3000); // Force show app after 3 seconds if auth is still loading
-  });
   
   $: currentComponent = navigationItems.find(nav => nav.id === $navigation.currentTab)?.component;
 </script>
 
-{#if ($authStore.loading && !authTimeout) || $router.path === '/auth/callback'}
-  <!-- Loading Screen -->
+{#if $router.path === '/auth/callback'}
+  <!-- Auth Callback Loading Screen -->
   <div class="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center">
     <div class="text-center">
       <div class="inline-flex items-center justify-center w-20 h-20 bg-teal-600 rounded-2xl mb-4">
@@ -102,7 +95,7 @@
       <h1 class="text-2xl font-bold text-gray-900 mb-2">ClearMind</h1>
       <div class="flex items-center justify-center space-x-2 text-gray-600">
         <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-teal-600"></div>
-        <p>{$router.path === '/auth/callback' ? 'Signing you in...' : 'Loading...'}</p>
+        <p>Signing you in...</p>
       </div>
     </div>
   </div>
