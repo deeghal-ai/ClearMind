@@ -1,5 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import { supabase } from '../supabase.js';
+import { eventBus, EVENTS } from './events.js';
 
 // Helper function to get current user ID from auth
 async function getCurrentUserId() {
@@ -515,6 +516,16 @@ function createTrackerStore() {
 }
 
 export const trackerStore = createTrackerStore();
+
+// Listen for roadmap progress events to avoid circular dependency
+eventBus.subscribe(events => {
+  const lastEvent = events[events.length - 1];
+  if (lastEvent && lastEvent.type === EVENTS.ROADMAP_PROGRESS) {
+    const { userId, roadmapName, stageName, completed } = lastEvent.data;
+    // Call trackRoadmapProgress directly on the store
+    trackerStore.trackRoadmapProgress(userId, roadmapName, stageName, completed);
+  }
+});
 
 // Derived stores for convenience
 export const todaysProgress = derived(trackerStore, $tracker => {

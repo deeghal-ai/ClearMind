@@ -1,5 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import { supabase } from '../supabase.js';
+import { eventBus, EVENTS } from './events.js';
 
 function createRoadmapStore() {
   const { subscribe, set, update } = writable({
@@ -121,11 +122,13 @@ function createRoadmapStore() {
           const roadmapName = currentState.selectedRoadmap.name;
           const stageName = currentState.selectedRoadmap.stages[stageIndex].title;
           
-          // Import tracker store dynamically to avoid circular dependency
-          const { trackerStore } = await import('./tracker.js');
-          
-          // Track this progress in the daily tracker
-          await trackerStore.trackRoadmapProgress(userId, roadmapName, stageName, completed);
+          // Emit event for tracker to handle (avoids circular dependency)
+          eventBus.emit(EVENTS.ROADMAP_PROGRESS, {
+            userId,
+            roadmapName,
+            stageName,
+            completed
+          });
         }
         
         console.log('Stage toggle successful:', data);

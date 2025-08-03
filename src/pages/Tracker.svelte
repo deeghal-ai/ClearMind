@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { trackerStore, todaysProgress, streakInfo } from '../lib/stores/tracker.js';
   import { user } from '../lib/stores/user.js';
+  import { authStore, isAuthenticated, userId as authUserId } from '../lib/stores/user.js';
   import GoalInput from '../lib/components/GoalInput.svelte';
   import MoodEnergyTracker from '../lib/components/MoodEnergyTracker.svelte';
 
@@ -14,20 +15,34 @@
   let showAchievements = false;
   
   onMount(async () => {
-    // Initialize user first
+    // Initialize both auth and legacy user systems
+    await authStore.init();
     await user.init();
     
-    // Wait for user to be available before initializing tracker
-    const unsubscribe = user.subscribe(u => {
-      localUserId = u.id;
-      // Use the userId prop if available, otherwise use from store
-      const activeUserId = userId || localUserId;
-      if (activeUserId && trackerStore && typeof trackerStore.init === 'function') {
-        initializeTracker(activeUserId);
+    // Subscribe to auth changes for authenticated users
+    const authUnsubscribe = authStore.subscribe(auth => {
+      if ($isAuthenticated && $authUserId && trackerStore && typeof trackerStore.init === 'function') {
+        initializeTracker($authUserId);
       }
     });
     
-    return unsubscribe;
+    // Fallback to legacy user system for backward compatibility
+    const userUnsubscribe = user.subscribe(u => {
+      localUserId = u.id;
+      // Only use legacy user if not authenticated via Supabase
+      if (!$isAuthenticated) {
+        const activeUserId = userId || localUserId;
+        if (activeUserId && trackerStore && typeof trackerStore.init === 'function') {
+          // For legacy users, skip tracker initialization as it requires Supabase auth
+          console.log('Legacy user detected, tracker disabled:', activeUserId);
+        }
+      }
+    });
+    
+    return () => {
+      authUnsubscribe();
+      userUnsubscribe();
+    };
   });
   
   async function initializeTracker(userId) {
@@ -105,6 +120,17 @@
 </script>
 
 <div class="w-full px-4 pt-1 pb-4 space-y-1">
+  <!-- Show authentication notice for legacy users -->
+  {#if !$isAuthenticated}
+    <div class="card-zen">
+      <div class="text-center py-8">
+        <div class="text-4xl mb-4">🔐</div>
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">Authentication Required</h2>
+        <p class="text-gray-600 mb-4">The Tracker feature requires you to be signed in to save your progress.</p>
+        <a href="/login" class="btn-primary">Sign In to Continue</a>
+      </div>
+    </div>
+  {:else}
   <!-- Header with streak info -->
   <div class="card-zen">
     <div class="flex items-center justify-between">
@@ -501,6 +527,7 @@
         </div>
       {/if}
     </div>
+  {/if}
   {/if}
 </div>
 
