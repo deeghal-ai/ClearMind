@@ -62,6 +62,18 @@
     --color-warning-soft: #fef3c7;
     --color-error: #ef4444;
     --color-error-soft: #fecaca;
+    
+    /* Sage Palette - Missing Variables */
+    --sage-50: #f9fafb;
+    --sage-100: #f3f4f6;
+    --sage-200: #e5e7eb;
+    --sage-300: #d1d5db;
+    --sage-400: #9ca3af;
+    --sage-500: #6b7280;
+    --sage-600: #4b5563;
+    --sage-700: #374151;
+    --sage-800: #1f2937;
+    --sage-900: #111827;
   }
 
   * {
