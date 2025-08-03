@@ -289,16 +289,16 @@ function createTrackerStore() {
         updated_at: new Date().toISOString()
       };
       
-      const { data, error } = await supabase
+      // Try to update first
+      const { data: updateData, error: updateError } = await supabase
         .from('daily_logs')
         .update(logData)
         .eq('user_id', userId)
         .eq('date', today)
-        .select()
-        .single();
+        .select();
         
-      if (error) {
-        console.error('Error saving log:', error);
+      if (updateError) {
+        console.error('Error updating log:', updateError);
         update(store => ({ 
           ...store, 
           error: 'Failed to save changes' 
@@ -306,7 +306,33 @@ function createTrackerStore() {
         return;
       }
       
-      update(store => ({ ...store, todaysLog: data, error: null }));
+      // If no rows were updated, create a new log
+      if (!updateData || updateData.length === 0) {
+        const newLogData = {
+          user_id: userId,
+          date: today,
+          ...logData
+        };
+        
+        const { data: insertData, error: insertError } = await supabase
+          .from('daily_logs')
+          .insert([newLogData])
+          .select()
+          .single();
+          
+        if (insertError) {
+          console.error('Error creating log:', insertError);
+          update(store => ({ 
+            ...store, 
+            error: 'Failed to save changes' 
+          }));
+          return;
+        }
+        
+        update(store => ({ ...store, todaysLog: insertData, error: null }));
+      } else {
+        update(store => ({ ...store, todaysLog: updateData[0], error: null }));
+      }
       
       // Refresh streak data and check achievements
       await this.loadStreakData(userId);

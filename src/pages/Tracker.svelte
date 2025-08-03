@@ -14,13 +14,15 @@
   let showAchievements = false;
   
   onMount(async () => {
-    // Initialize user
-    user.init();
+    // Initialize user first
+    await user.init();
+    
+    // Wait for user to be available before initializing tracker
     const unsubscribe = user.subscribe(u => {
       localUserId = u.id;
       // Use the userId prop if available, otherwise use from store
       const activeUserId = userId || localUserId;
-      if (activeUserId) {
+      if (activeUserId && trackerStore && typeof trackerStore.init === 'function') {
         initializeTracker(activeUserId);
       }
     });
@@ -29,8 +31,15 @@
   });
   
   async function initializeTracker(userId) {
-    await trackerStore.init(userId);
-
+    try {
+      if (trackerStore && typeof trackerStore.init === 'function') {
+        await trackerStore.init(userId);
+      } else {
+        console.error('trackerStore.init is not available:', trackerStore);
+      }
+    } catch (error) {
+      console.error('Error initializing tracker:', error);
+    }
   }
   
 
