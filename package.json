@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "vite dev --port 5174",
@@ -21,8 +21,7 @@
     "vite": "4.5.2"
   },
   "dependencies": {
-    "@supabase/auth-helpers-sveltekit": "^0.13.0",
-    "@supabase/supabase-js": "2.39.0",
+    "@supabase/supabase-js": "^2.53.0",
     "fast-xml-parser": "^5.2.5",
     "marked": "^16.1.1",
     "openai": "^5.11.0"
