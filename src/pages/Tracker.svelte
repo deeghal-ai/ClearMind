@@ -4,21 +4,24 @@
   import { user } from '../lib/stores/user.js';
   import GoalInput from '../lib/components/GoalInput.svelte';
   import MoodEnergyTracker from '../lib/components/MoodEnergyTracker.svelte';
-  import CalendarHeatmap from '../lib/components/CalendarHeatmap.svelte';
+
   import LearningAnalytics from '../lib/components/LearningAnalyticsSimple.svelte';
   
-  let userId = '';
+  // Accept userId prop from App.svelte (though we get it from user store too)
+  export let userId = '';
+  let localUserId = '';
   let activeTab = 'today';
-  let calendarData = [];
   let showAchievements = false;
   
   onMount(async () => {
     // Initialize user
     user.init();
     const unsubscribe = user.subscribe(u => {
-      userId = u.id;
-      if (u.id) {
-        initializeTracker(u.id);
+      localUserId = u.id;
+      // Use the userId prop if available, otherwise use from store
+      const activeUserId = userId || localUserId;
+      if (activeUserId) {
+        initializeTracker(activeUserId);
       }
     });
     
@@ -27,13 +30,10 @@
   
   async function initializeTracker(userId) {
     await trackerStore.init(userId);
-    await loadCalendarData();
+
   }
   
-  async function loadCalendarData() {
-    if (!userId) return;
-    calendarData = await trackerStore.getCalendarData(userId);
-  }
+
   
   // Goal management handlers
   async function handleAddGoal(event) {
@@ -310,8 +310,8 @@
           </div>
         {/if}
         
-        <!-- Reflection Section -->
-        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <!-- Reflection Section (Desktop only) -->
+        <div class="hidden lg:block bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
           <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
             <span class="text-xl">💭</span>
             Daily Reflection
@@ -411,10 +411,7 @@
 
   {:else if activeTab === 'history'}
     <div class="space-y-6">
-      <CalendarHeatmap 
-        {calendarData}
-        loading={$trackerStore.loading}
-      />
+
       
       <!-- Recent Activity -->
       <div class="bg-white rounded-lg border border-gray-200 p-6">

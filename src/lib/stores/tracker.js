@@ -330,32 +330,7 @@ function createTrackerStore() {
       }
     },
 
-    // Get calendar heatmap data (last 365 days)
-    async getCalendarData(userId) {
-      const oneYearAgo = new Date();
-      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-      
-      const { data, error } = await supabase
-        .from('daily_logs')
-        .select('date, learning_minutes, focus_sessions, goals, completed_goals')
-        .eq('user_id', userId)
-        .gte('date', oneYearAgo.toISOString().split('T')[0])
-        .order('date', { ascending: true });
-        
-      if (error) {
-        console.error('Error loading calendar data:', error);
-        return [];
-      }
-      
-      // Process data for calendar heatmap
-      return data.map(log => ({
-        date: log.date,
-        value: Math.min(4, Math.floor((log.learning_minutes || 0) / 30)), // 0-4 intensity
-        goals: log.goals?.length || 0,
-        completed: log.completed_goals?.length || 0,
-        sessions: log.focus_sessions || 0
-      }));
-    },
+
 
     // Get weekly analytics
     async getWeeklyAnalytics(userId, weeks = 12) {
