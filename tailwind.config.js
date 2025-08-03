@@ -5,6 +5,22 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx,svelte}"
   ],
   safelist: [
+    // CRITICAL LAYOUT CLASSES - Missing these breaks the entire UI
+    'min-h-screen', 'flex', 'flex-col', 'w-16', 'w-64', 'w-0', 'lg:w-64', 'h-12', 'h-36', 'lg:h-36',
+    'transition-all', 'duration-300', 'ease-in-out', 'overflow-hidden', 'flex-1', 'overflow-auto',
+    'px-4', 'lg:px-8', 'py-3', 'pt-4', 'pb-8', 'space-y-2', 'items-center', 'justify-center', 'justify-between',
+    'lg:justify-start', 'lg:space-x-3', 'rounded-lg', 'bg-gradient-to-r', 'bg-gradient-to-br',
+    
+    // TEAL COLORS - App uses teal theme extensively  
+    'bg-teal-50', 'bg-teal-100', 'bg-teal-500', 'bg-teal-600', 'bg-teal-700',
+    'text-teal-600', 'text-teal-700', 'border-teal-200', 'border-teal-300',
+    'from-teal-50', 'to-teal-100', 'from-teal-500', 'to-teal-700', 'from-teal-400', 'to-teal-600',
+    'hover:from-teal-100', 'hover:to-cyan-100', 'hover:border-teal-300/50',
+    
+    // RESPONSIVE CLASSES - Critical for mobile/desktop layout
+    'lg:w-64', 'lg:h-36', 'lg:inline', 'lg:hidden', 'lg:block', 'lg:px-8', 'lg:ml-0',
+    'lg:justify-start', 'lg:space-x-3', 'lg:px-4', 'lg:text-base',
+    
     // Core utility classes that must be included
     'bg-white', 'bg-gray-50', 'bg-gray-100', 'bg-gray-200', 'bg-gray-300', 'bg-gray-400', 'bg-gray-500', 'bg-gray-600', 'bg-gray-700', 'bg-gray-800', 'bg-gray-900',
     'text-white', 'text-gray-50', 'text-gray-100', 'text-gray-200', 'text-gray-300', 'text-gray-400', 'text-gray-500', 'text-gray-600', 'text-gray-700', 'text-gray-800', 'text-gray-900',
@@ -42,7 +58,13 @@ export default {
     'bg-blue-50/50', 'bg-green-50/50', 'bg-purple-50/50',
     
     // Hover states that might be dynamic
-    'hover:shadow-md', 'hover:bg-gray-50', 'hover:bg-gray-100',
+    'hover:shadow-md', 'hover:bg-gray-50', 'hover:bg-gray-100', 'hover:bg-white/10', 'hover:text-white',
+    
+    // WHITE OPACITY CLASSES - Used in sidebar
+    'bg-white/10', 'border-white/10', 'text-white/50', 'text-white/60', 'text-white/70',
+    
+    // ANIMATION CLASSES
+    'animate-pulse', 'animate-fade-in',
   ],
   theme: {
     extend: {

@@ -81,47 +81,6 @@
     setTimeout(() => router.navigate('/'), 1000);
   }
   
-  // PRODUCTION DEBUGGING - Log all critical states
-  $: {
-    console.log('🐛 DEBUG - App State:', {
-      routerPath: $router.path,
-      showLogin: showLogin,
-      authStoreLoading: $authStore.loading,
-      authStoreInitialized: $authStore.initialized,
-      isAuthenticated: $isAuthenticated,
-      authUserId: $authUserId,
-      legacyUserId: $legacyUser?.id,
-      currentTab: $navigation.currentTab,
-      currentComponent: currentComponent?.name || 'none'
-    });
-  }
-  
-  // CSS DEBUGGING - Check if styles are loading
-  onMount(() => {
-    console.log('🎨 CSS DEBUG - Checking styles...');
-    console.log('🎨 CSS Variables:', {
-      colorZen50: getComputedStyle(document.documentElement).getPropertyValue('--color-zen-50'),
-      sagePrimary: getComputedStyle(document.documentElement).getPropertyValue('--sage-primary'),
-      bodyStyles: getComputedStyle(document.body),
-      tailwindTest: getComputedStyle(document.body).getPropertyValue('--tw-bg-opacity')
-    });
-    
-    // Check if CSS file is loaded
-    const cssLinks = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
-    console.log('🎨 CSS Files loaded:', cssLinks.map(link => link.href));
-    
-    // Test if basic Tailwind classes work
-    const testDiv = document.createElement('div');
-    testDiv.className = 'min-h-screen bg-teal-500 hidden';
-    document.body.appendChild(testDiv);
-    const testStyles = getComputedStyle(testDiv);
-    console.log('🎨 Tailwind Test:', {
-      minHeight: testStyles.minHeight,
-      backgroundColor: testStyles.backgroundColor,
-      display: testStyles.display
-    });
-    document.body.removeChild(testDiv);
-  });
   
   
   $: currentComponent = navigationItems.find(nav => nav.id === $navigation.currentTab)?.component;
@@ -129,7 +88,6 @@
 
 {#if $router.path === '/auth/callback'}
   <!-- Auth Callback Loading Screen -->
-  {console.log('🐛 RENDERING: Auth callback loading screen')}
   <div class="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center">
     <div class="text-center">
       <div class="inline-flex items-center justify-center w-20 h-20 bg-teal-600 rounded-2xl mb-4">
@@ -144,14 +102,11 @@
   </div>
 {:else if showLogin}
   <!-- Login Page -->
-  {console.log('🐛 RENDERING: Login page')}
   <Login />
 {:else}
   <!-- Main App -->
-  {console.log('🐛 RENDERING: Main app with sidebar and content')}
   <div class="min-h-screen flex" style="background-color: var(--color-zen-50);">
     <!-- Left Sidebar Navigation -->
-    {console.log('🐛 RENDERING: Sidebar component')}
     <aside 
       class="{isMobileNavOpen ? 'w-16' : 'w-0'} lg:w-64 min-h-screen flex flex-col transition-all duration-300 ease-in-out overflow-hidden" 
       style="background: linear-gradient(180deg, #14B8A6, #0F766E); border-right: 1px solid rgba(255,255,255,0.1);"
