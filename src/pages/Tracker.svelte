@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { trackerStore, todaysProgress, streakInfo } from '../lib/stores/tracker.js';
-  import { user } from '../lib/stores/user.js';
+  import { legacyUser } from '../lib/stores/user.js';
   import { authStore, isAuthenticated, userId as authUserId } from '../lib/stores/user.js';
   import GoalInput from '../lib/components/GoalInput.svelte';
   import MoodEnergyTracker from '../lib/components/MoodEnergyTracker.svelte';
@@ -17,7 +17,7 @@
   onMount(async () => {
     // Initialize both auth and legacy user systems
     await authStore.init();
-    await user.init();
+    await legacyUser.init();
     
     // Subscribe to auth changes for authenticated users
     const authUnsubscribe = authStore.subscribe(auth => {
@@ -27,7 +27,7 @@
     });
     
     // Fallback to legacy user system for backward compatibility
-    const userUnsubscribe = user.subscribe(u => {
+    const userUnsubscribe = legacyUser.subscribe(u => {
       localUserId = u.id;
       // Only use legacy user if not authenticated via Supabase
       if (!$isAuthenticated) {

@@ -19,10 +19,18 @@ function createAuthStore() {
     
     async init() {
       if (!browser) return;
+      
+      // Prevent multiple initializations
+      if (authListener) {
+        console.log('Auth already initialized, skipping');
+        return;
+      }
 
       try {
         // Get initial session
         const { data: { session } } = await supabase.auth.getSession();
+        
+        console.log('Initial session loaded:', session?.user?.email || 'No session');
         
         set({
           user: session?.user ?? null,
@@ -102,14 +110,25 @@ function createLegacyUserStore() {
               initialized: true
             }));
           } else if ($auth.initialized) {
-            // Fallback to localStorage for backward compatibility
-            this.initLegacy();
+            // No longer auto-create legacy users - require authentication
+            console.log('No authenticated user, legacy user disabled');
+            update(u => ({
+              ...u,
+              id: '',
+              name: 'Learner',
+              initialized: true
+            }));
           }
         });
         return unsubscribe;
       } else {
-        // Fallback to localStorage
-        this.initLegacy();
+        // No longer auto-create legacy users
+        console.log('Auth not available, legacy user disabled');
+        set({
+          id: '',
+          name: 'Learner',
+          initialized: true
+        });
       }
     },
     

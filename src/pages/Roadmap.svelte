@@ -4,6 +4,7 @@
   import { navigation } from '../lib/stores/navigation.js';
   import { chatPanel } from '../lib/stores/chatPanel.js';
   import { trackerStore } from '../lib/stores/tracker.js';
+  import { isAuthenticated } from '../lib/stores/user.js';
 
   export let userId;
 
@@ -292,6 +293,17 @@
   }
 </script>
 
+{#if !$isAuthenticated}
+  <!-- Authentication Required -->
+  <div class="card-zen">
+    <div class="text-center py-8">
+      <div class="text-4xl mb-4">🔐</div>
+      <h2 class="text-xl font-semibold text-gray-800 mb-2">Authentication Required</h2>
+      <p class="text-gray-600 mb-4">The Roadmap feature requires you to be signed in to save your progress.</p>
+      <a href="/login" class="btn-primary">Sign In to Continue</a>
+    </div>
+  </div>
+{:else}
 <div class="space-y-3">
   {#if $roadmapStore.loading}
     <!-- Loading State -->
@@ -795,6 +807,7 @@
   <div class="fixed bottom-4 right-4 z-50 {toastType === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white px-4 py-2 rounded-lg shadow-lg transition-all">
     {toastMessage}
   </div>
+{/if}
 {/if}
 
 <style>

@@ -105,6 +105,20 @@
   <!-- Login Page -->
   <Login />
 {:else}
+  <!-- Check if user is authenticated -->
+  {#if !$isAuthenticated}
+    <!-- Show login prompt for unauthenticated users -->
+    <div class="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center">
+      <div class="text-center max-w-md mx-4">
+        <div class="inline-flex items-center justify-center w-20 h-20 bg-teal-600 rounded-2xl mb-6">
+          <span class="text-4xl">🧠</span>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">Welcome to ClearMind</h1>
+        <p class="text-gray-600 mb-6">Sign in to access your learning roadmaps, track progress, and chat with AI.</p>
+        <a href="/login" class="btn-primary inline-block">Sign In to Continue</a>
+      </div>
+    </div>
+  {:else}
   <!-- Main App -->
   <div class="min-h-screen flex" style="background-color: var(--color-zen-50);">
     <!-- Left Sidebar Navigation -->
@@ -243,4 +257,5 @@
   
   <!-- Right Chat Panel (only show when authenticated) -->
   <RightChatPanel {userId} />
+  {/if}
 {/if}
