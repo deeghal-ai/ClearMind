@@ -7,7 +7,7 @@
   import RightChatPanel from './lib/components/RightChatPanel.svelte';
   import { navigation } from './lib/stores/navigation.js';
   import { chatPanel } from './lib/stores/chatPanel.js';
-  import { authStore, isAuthenticated, userId as authUserId, legacyUser } from './lib/stores/user.js';
+  import { authStore, isAuthenticated, userId as authUserId, userEmail, legacyUser } from './lib/stores/user.js';
   import { authService } from './lib/services/auth.js';
   import { router } from './lib/router.js';
   
@@ -144,7 +144,7 @@
       {#if $isAuthenticated}
         <!-- Authenticated User Info -->
         <div class="text-gray-300 text-sm lg:text-base">
-          <p class="hidden lg:block truncate">{$authStore.user?.email}</p>
+          <p class="hidden lg:block truncate">{$userEmail}</p>
           <p class="lg:hidden text-center">👤</p>
         </div>
         <button 
