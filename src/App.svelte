@@ -106,12 +106,12 @@
   <div class="min-h-screen flex" style="background-color: var(--color-zen-50);">
     <!-- Left Sidebar Navigation -->
     <aside 
-      class="{isMobileNavOpen ? 'w-16' : 'w-0'} lg:w-64 min-h-screen flex flex-col transition-all duration-300 ease-in-out overflow-hidden" 
+      class="w-16 lg:w-64 min-h-screen flex flex-col transition-all duration-300 ease-in-out overflow-hidden" 
       style="background: linear-gradient(180deg, #14B8A6, #0F766E); border-right: 1px solid rgba(255,255,255,0.1);"
     >
     <!-- Logo Section -->
     <div class="pt-0 pb-6 border-b flex justify-center" style="border-color: rgba(255,255,255,0.1);">
-      <img src="/clearmind.png" alt="ClearMind Logo" class="w-12 h-12 lg:w-36 lg:h-36" />
+      <img src="/clearmind.png" alt="ClearMind Logo" class="w-12 h-12 lg:w-36 lg:h-36" onerror="this.style.display='none'" />
     </div>
     
     <!-- Navigation Items -->
