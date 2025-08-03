@@ -81,12 +81,28 @@
     setTimeout(() => router.navigate('/'), 1000);
   }
   
+  // PRODUCTION DEBUGGING - Log all critical states
+  $: {
+    console.log('🐛 DEBUG - App State:', {
+      routerPath: $router.path,
+      showLogin: showLogin,
+      authStoreLoading: $authStore.loading,
+      authStoreInitialized: $authStore.initialized,
+      isAuthenticated: $isAuthenticated,
+      authUserId: $authUserId,
+      legacyUserId: $legacyUser?.id,
+      currentTab: $navigation.currentTab,
+      currentComponent: currentComponent?.name || 'none'
+    });
+  }
+  
   
   $: currentComponent = navigationItems.find(nav => nav.id === $navigation.currentTab)?.component;
 </script>
 
 {#if $router.path === '/auth/callback'}
   <!-- Auth Callback Loading Screen -->
+  {console.log('🐛 RENDERING: Auth callback loading screen')}
   <div class="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center">
     <div class="text-center">
       <div class="inline-flex items-center justify-center w-20 h-20 bg-teal-600 rounded-2xl mb-4">
@@ -101,13 +117,16 @@
   </div>
 {:else if showLogin}
   <!-- Login Page -->
+  {console.log('🐛 RENDERING: Login page')}
   <Login />
 {:else}
   <!-- Main App -->
+  {console.log('🐛 RENDERING: Main app with sidebar and content')}
   <div class="min-h-screen flex" style="background-color: var(--color-zen-50);">
     <!-- Left Sidebar Navigation -->
+    {console.log('🐛 RENDERING: Sidebar component')}
     <aside 
-      class="w-16 lg:w-64 min-h-screen flex flex-col transition-all duration-300 ease-in-out overflow-hidden" 
+      class="{isMobileNavOpen ? 'w-16' : 'w-0'} lg:w-64 min-h-screen flex flex-col transition-all duration-300 ease-in-out overflow-hidden" 
       style="background: linear-gradient(180deg, #14B8A6, #0F766E); border-right: 1px solid rgba(255,255,255,0.1);"
     >
     <!-- Logo Section -->
