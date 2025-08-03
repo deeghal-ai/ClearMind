@@ -55,6 +55,21 @@
     // Setup keyboard shortcut
     document.addEventListener('keydown', handleKeydown);
     
+    // TAILWIND DEBUG - Test if critical classes work now
+    setTimeout(() => {
+      const testDiv = document.createElement('div');
+      testDiv.className = 'w-16 lg:w-64 bg-teal-500 min-h-screen hidden';
+      document.body.appendChild(testDiv);
+      const styles = getComputedStyle(testDiv);
+      console.log('🎨 TAILWIND FIX TEST:', {
+        width: styles.width,
+        backgroundColor: styles.backgroundColor,
+        minHeight: styles.minHeight,
+        display: styles.display
+      });
+      document.body.removeChild(testDiv);
+    }, 1000);
+    
     return () => {
       document.removeEventListener('keydown', handleKeydown);
       authStore.cleanup();

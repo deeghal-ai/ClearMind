@@ -2,7 +2,9 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx,svelte}"
+    "./src/**/*.{js,ts,jsx,tsx,svelte}",
+    // Add explicit content to ensure classes are detected
+    { raw: 'w-16 w-64 lg:w-64 min-h-screen flex bg-teal-500 bg-teal-600 text-white bg-white/10', extension: 'html' }
   ],
   safelist: [
     // CRITICAL LAYOUT CLASSES - Missing these breaks the entire UI
