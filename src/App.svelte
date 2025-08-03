@@ -72,8 +72,8 @@
     }
   }
   
-  // Check if we should show login page
-  $: showLogin = $router.path === '/login' || ($authStore.initialized && !$isAuthenticated && $router.path !== '/auth/callback');
+  // Check if we should show login page - more robust logic
+  $: showLogin = $router.path === '/login';
   
   // Handle auth callback
   $: if ($router.path === '/auth/callback') {
@@ -81,10 +81,18 @@
     setTimeout(() => router.navigate('/'), 1000);
   }
   
+  // Add timeout to prevent infinite loading in production
+  let authTimeout = false;
+  onMount(() => {
+    setTimeout(() => {
+      authTimeout = true;
+    }, 3000); // Force show app after 3 seconds if auth is still loading
+  });
+  
   $: currentComponent = navigationItems.find(nav => nav.id === $navigation.currentTab)?.component;
 </script>
 
-{#if $authStore.loading || $router.path === '/auth/callback'}
+{#if ($authStore.loading && !authTimeout) || $router.path === '/auth/callback'}
   <!-- Loading Screen -->
   <div class="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center">
     <div class="text-center">
