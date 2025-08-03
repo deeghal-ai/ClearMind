@@ -11,8 +11,8 @@
   
   // Remove Chat from navigation items
   const navigationItems = [
-    { name: 'Feeds', id: 'feeds', emoji: '📰', component: Feeds },
     { name: 'Roadmap', id: 'roadmap', emoji: '🎯', component: Roadmap },
+    { name: 'Feeds', id: 'feeds', emoji: '📰', component: Feeds },
     { name: 'Tracker', id: 'tracker', emoji: '✅', component: Tracker }
   ];
   
@@ -54,11 +54,8 @@
   <!-- Left Sidebar Navigation -->
   <aside class="w-64 min-h-screen flex flex-col" style="background: linear-gradient(180deg, #14B8A6, #0F766E); border-right: 1px solid rgba(255,255,255,0.1);">
     <!-- Logo Section -->
-    <div class="px-6 pt-4 pb-6 border-b" style="border-color: rgba(255,255,255,0.1);">
-      <div class="flex items-center space-x-3">
-        <img src="/clearmind.png" alt="ClearMind Logo" class="w-32 h-32" />
-
-      </div>
+    <div class="pt-0 pb-6 border-b flex justify-center" style="border-color: rgba(255,255,255,0.1);">
+      <img src="/clearmind.png" alt="ClearMind Logo" class="w-36 h-36" />
     </div>
     
     <!-- Navigation Items -->
@@ -100,7 +97,7 @@
   <!-- Main Content Area -->
   <main class="flex-1 overflow-auto flex flex-col">
     <!-- App Header -->
-    <header class="bg-gradient-to-r from-white via-gray-50/95 to-white backdrop-blur-sm border-b border-gray-300/60 px-8 py-6 shadow-sm">
+    <header class="bg-gradient-to-r from-white via-gray-50/95 to-white backdrop-blur-sm border-b border-gray-300/60 px-8 py-3 shadow-sm">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-4">
           <div class="w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-pulse shadow-sm"></div>
@@ -111,10 +108,14 @@
         
         <div class="flex items-center gap-4">
           <!-- Future buttons will go here -->
-          <div class="flex items-center gap-3 px-3 py-1.5 bg-gradient-to-r from-teal-50 to-cyan-50 rounded-full border border-teal-200/50">
+          <button 
+            on:click={() => chatPanel.open()}
+            class="flex items-center gap-3 px-3 py-1.5 bg-gradient-to-r from-teal-50 to-cyan-50 rounded-full border border-teal-200/50 hover:from-teal-100 hover:to-cyan-100 hover:border-teal-300/50 transition-all duration-200 cursor-pointer"
+            title="Open AI Chat"
+          >
             <div class="w-2 h-2 bg-gradient-to-r from-teal-400 to-cyan-500 rounded-full animate-pulse"></div>
             <span class="text-sm font-medium text-teal-700">AI-Powered Learning</span>
-          </div>
+          </button>
         </div>
       </div>
     </header>

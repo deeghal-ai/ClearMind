@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 function createChatPanelStore() {
   const { subscribe, set, update } = writable({
     isOpen: false,
-    width: 380, // Default width in pixels
+    width: 600, // Default width in pixels (maximum size)
     activeView: 'chat', // 'chat' | 'history'
     isHistoryExpanded: false,
     pendingContext: null // For context passed from other components

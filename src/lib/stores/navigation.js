@@ -3,7 +3,7 @@ import { chatPanel } from './chatPanel.js';
 
 function createNavigationStore() {
   const { subscribe, set, update } = writable({
-    currentTab: 'feeds'
+    currentTab: 'roadmap'
   });
 
   return {

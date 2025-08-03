@@ -95,7 +95,7 @@
   }
 </script>
 
-<div class="w-full p-4 space-y-6">
+<div class="w-full px-4 pt-1 pb-4 space-y-1">
   <!-- Header with streak info -->
   <div class="card-zen">
     <div class="flex items-center justify-between">
