@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   // FIXED: Explicit content paths for Vercel production builds
   content: [
     "./index.html",
