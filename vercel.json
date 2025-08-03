@@ -4,7 +4,8 @@
   "framework": null,
   "build": {
     "env": {
-      "NODE_ENV": "production"
+      "NODE_ENV": "production",
+      "CACHE_BUST": "v2.1-force-rebuild"
     }
   },
   "rewrites": [

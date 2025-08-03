@@ -84,7 +84,7 @@
       });
       document.body.removeChild(testDiv2);
 
-      // Test 3: Check loaded stylesheets
+      // Test 3: Check loaded stylesheets AND their actual content
       console.log('🎨 LOADED STYLESHEETS:', Array.from(document.styleSheets).map(sheet => {
         try {
           return {
@@ -95,6 +95,30 @@
           return { href: sheet.href, error: 'Cannot access' }
         }
       }));
+
+      // Test 4: Fetch the actual CSS content to verify our classes are there
+      const cssLinks = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
+      cssLinks.forEach(async (link) => {
+        try {
+          const response = await fetch(link.href);
+          const cssText = await response.text();
+          const hasOurClasses = [
+            '.w-16', '.lg\\:w-64', '.bg-teal-500', '.min-h-screen', 
+            'Cache Bust', 'CRITICAL: Manually inject'
+          ];
+          
+          console.log('🔍 CSS CONTENT CHECK:', {
+            url: link.href,
+            size: cssText.length,
+            hasClasses: hasOurClasses.map(cls => ({
+              class: cls,
+              found: cssText.includes(cls)
+            }))
+          });
+        } catch (e) {
+          console.log('❌ Failed to fetch CSS:', link.href, e);
+        }
+      });
 
     }, 1000);
     
@@ -136,7 +160,7 @@
       <div class="inline-flex items-center justify-center w-20 h-20 bg-teal-600 rounded-2xl mb-4">
         <span class="text-4xl">🧠</span>
       </div>
-      <h1 class="text-2xl font-bold text-gray-900 mb-2">ClearMind</h1>
+      <h1 class="text-2xl font-bold text-gray-900 mb-2">ClearMind v2.1</h1>
       <div class="flex items-center justify-center space-x-2 text-gray-600">
         <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-teal-600"></div>
         <p>Signing you in...</p>
