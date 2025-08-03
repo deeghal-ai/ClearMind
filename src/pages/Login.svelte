@@ -56,15 +56,14 @@
   }
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center p-4">
+<div class="min-h-screen flex items-center justify-center p-4" style="background: linear-gradient(180deg, #14B8A6, #0F766E);">
   <div class="max-w-md w-full">
     <!-- Logo and Title -->
     <div class="text-center mb-8">
-      <div class="inline-flex items-center justify-center w-20 h-20 bg-teal-600 rounded-2xl mb-4">
-        <span class="text-4xl">🧠</span>
+      <div class="mt-4">
+        <img src="/clearmind.png" alt="ClearMind Logo" class="w-36 h-36 mx-auto object-contain" onerror="this.style.display='none'" />
       </div>
-      <h1 class="text-3xl font-bold text-gray-900">ClearMind</h1>
-      <p class="text-gray-600 mt-2">Your sanctuary for focused learning</p>
+      <p class="text-xl font-medium text-white mb-6">Your sanctuary for focused learning</p>
     </div>
 
     <!-- Auth Form -->
