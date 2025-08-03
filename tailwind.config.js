@@ -1,11 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx,svelte}",
-    // Add explicit content to ensure classes are detected
-    { raw: 'w-16 w-64 lg:w-64 min-h-screen flex bg-teal-500 bg-teal-600 text-white bg-white/10', extension: 'html' }
-  ],
+  // ULTIMATE NUCLEAR: Include everything by using wildcard patterns
+  content: ["./src/**", "./index.html", "./**/*.{html,js,svelte,ts}"],
   safelist: [
     // CRITICAL LAYOUT CLASSES - Missing these breaks the entire UI
     'min-h-screen', 'flex', 'flex-col', 'w-16', 'w-64', 'w-0', 'lg:w-64', 'h-12', 'h-36', 'lg:h-36',

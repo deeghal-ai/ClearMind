@@ -55,19 +55,47 @@
     // Setup keyboard shortcut
     document.addEventListener('keydown', handleKeydown);
     
-    // TAILWIND DEBUG - Test if critical classes work now
+    // ULTIMATE TAILWIND DEBUG - Test multiple approaches
     setTimeout(() => {
-      const testDiv = document.createElement('div');
-      testDiv.className = 'w-16 lg:w-64 bg-teal-500 min-h-screen hidden';
-      document.body.appendChild(testDiv);
-      const styles = getComputedStyle(testDiv);
-      console.log('🎨 TAILWIND FIX TEST:', {
-        width: styles.width,
-        backgroundColor: styles.backgroundColor,
-        minHeight: styles.minHeight,
-        display: styles.display
+      // Test 1: Basic classes
+      const testDiv1 = document.createElement('div');
+      testDiv1.className = 'w-16 lg:w-64 bg-teal-500 min-h-screen hidden';
+      document.body.appendChild(testDiv1);
+      const styles1 = getComputedStyle(testDiv1);
+      console.log('🎨 TAILWIND TEST 1 (basic classes):', {
+        width: styles1.width,
+        backgroundColor: styles1.backgroundColor,
+        minHeight: styles1.minHeight,
+        display: styles1.display
       });
-      document.body.removeChild(testDiv);
+      document.body.removeChild(testDiv1);
+
+      // Test 2: Check if ANY Tailwind classes work
+      const testDiv2 = document.createElement('div');
+      testDiv2.className = 'flex text-red-500 p-4 m-2 border-2';
+      document.body.appendChild(testDiv2);
+      const styles2 = getComputedStyle(testDiv2);
+      console.log('🎨 TAILWIND TEST 2 (basic utility classes):', {
+        display: styles2.display,
+        color: styles2.color,
+        padding: styles2.padding,
+        margin: styles2.margin,
+        borderWidth: styles2.borderWidth
+      });
+      document.body.removeChild(testDiv2);
+
+      // Test 3: Check loaded stylesheets
+      console.log('🎨 LOADED STYLESHEETS:', Array.from(document.styleSheets).map(sheet => {
+        try {
+          return {
+            href: sheet.href,
+            rules: sheet.cssRules?.length || 0
+          }
+        } catch (e) {
+          return { href: sheet.href, error: 'Cannot access' }
+        }
+      }));
+
     }, 1000);
     
     return () => {
