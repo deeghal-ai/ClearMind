@@ -52,10 +52,10 @@
 
 <div class="min-h-screen flex" style="background-color: var(--color-zen-50);">
   <!-- Left Sidebar Navigation -->
-  <aside class="w-64 min-h-screen flex flex-col" style="background: linear-gradient(180deg, #14B8A6, #0F766E); border-right: 1px solid rgba(255,255,255,0.1);">
+  <aside class="w-16 lg:w-64 min-h-screen flex flex-col" style="background: linear-gradient(180deg, #14B8A6, #0F766E); border-right: 1px solid rgba(255,255,255,0.1);">
     <!-- Logo Section -->
     <div class="pt-0 pb-6 border-b flex justify-center" style="border-color: rgba(255,255,255,0.1);">
-      <img src="/clearmind.png" alt="ClearMind Logo" class="w-36 h-36" />
+      <img src="/clearmind.png" alt="ClearMind Logo" class="w-12 h-12 lg:w-36 lg:h-36" />
     </div>
     
     <!-- Navigation Items -->
@@ -64,31 +64,32 @@
         {#each navigationItems as item}
           <button 
             on:click={() => navigation.setTab(item.id)}
-            class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-left group
+            class="w-full flex items-center justify-center lg:justify-start lg:space-x-3 px-2 lg:px-4 py-3 rounded-lg transition-all duration-200 text-left group
                    {$navigation.currentTab === item.id 
                      ? 'text-white shadow-lg' 
                      : 'text-gray-300 hover:text-white hover:bg-white/10'}"
             style="{$navigation.currentTab === item.id 
                      ? 'background: linear-gradient(135deg, #06B6D4, #0891B2); box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);' 
                      : ''}"
+            title="{item.name}"
           >
             <span class="text-xl">{item.emoji}</span>
-            <span class="font-medium">{item.name}</span>
+            <span class="font-medium hidden lg:inline">{item.name}</span>
           </button>
         {/each}
       </div>
     </nav>
     
     <!-- User Info Section -->
-    <div class="p-4 border-t" style="border-color: rgba(255,255,255,0.1);">
+    <div class="p-2 lg:p-4 border-t" style="border-color: rgba(255,255,255,0.1);">
       <button 
         on:click={() => navigator.clipboard.writeText(`${window.location.origin}?user=${userId}`)}
-        class="w-full flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-gray-300 hover:text-white hover:bg-white/10"
+        class="w-full flex items-center justify-center lg:justify-start lg:space-x-2 px-2 lg:px-3 py-2 rounded-lg transition-colors text-gray-300 hover:text-white hover:bg-white/10"
         title="Copy shareable URL"
       >
         <span class="text-sm">📋</span>
         {#if userId}
-          <span class="text-sm font-mono">ID: {userId.slice(0, 8)}</span>
+          <span class="text-sm font-mono hidden lg:inline">ID: {userId.slice(0, 8)}</span>
         {/if}
       </button>
     </div>
@@ -97,7 +98,7 @@
   <!-- Main Content Area -->
   <main class="flex-1 overflow-auto flex flex-col">
     <!-- App Header -->
-    <header class="bg-gradient-to-r from-white via-gray-50/95 to-white backdrop-blur-sm border-b border-gray-300/60 px-8 py-3 shadow-sm">
+    <header class="bg-gradient-to-r from-white via-gray-50/95 to-white backdrop-blur-sm border-b border-gray-300/60 px-4 lg:px-8 py-3 shadow-sm">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-4">
           <div class="w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-pulse shadow-sm"></div>
@@ -121,7 +122,7 @@
     </header>
     
     <!-- Page Content -->
-    <div class="flex-1 px-8 pt-4 pb-8">
+    <div class="flex-1 px-4 lg:px-8 pt-4 pb-8">
       <div class="animate-fade-in space-zen-md">
         {#if currentComponent}
           <svelte:component this={currentComponent} {userId} />
