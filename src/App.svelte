@@ -3,9 +3,13 @@
   import Feeds from './pages/Feeds.svelte';
   import Roadmap from './pages/Roadmap.svelte';
   import Tracker from './pages/Tracker.svelte';
+  import Login from './pages/Login.svelte';
   import RightChatPanel from './lib/components/RightChatPanel.svelte';
   import { navigation } from './lib/stores/navigation.js';
   import { chatPanel } from './lib/stores/chatPanel.js';
+  import { authStore, isAuthenticated, userId as authUserId, legacyUser } from './lib/stores/user.js';
+  import { authService } from './lib/services/auth.js';
+  import { router } from './lib/router.js';
   
   let userId = '';
   let isMobileNavOpen = true; // Default to open (showing thin navbar)
@@ -41,38 +45,70 @@
     // Don't auto-close on mobile since it's just a thin sidebar
   }
   
-  onMount(() => {
-    // Check URL for user ID first
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlUserId = urlParams.get('user');
+  onMount(async () => {
+    // Initialize auth store
+    await authStore.init();
     
-    if (urlUserId) {
-      // Use URL user ID and save it
-      userId = urlUserId;
-      localStorage.setItem('learningos_user_id', userId);
-    } else {
-      // Use localStorage or create new
-      userId = localStorage.getItem('learningos_user_id') || '';
-      if (!userId) {
-        userId = 'user_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('learningos_user_id', userId);
-      }
-    }
+    // Initialize legacy user store for backward compatibility
+    legacyUser.init();
     
     // Setup keyboard shortcut
     document.addEventListener('keydown', handleKeydown);
-    return () => document.removeEventListener('keydown', handleKeydown);
+    
+    return () => {
+      document.removeEventListener('keydown', handleKeydown);
+      authStore.cleanup();
+      router.cleanup();
+    };
   });
+  
+  // Reactive statements for auth integration
+  $: {
+    // Use auth user ID if available, otherwise fall back to legacy user ID
+    if ($authUserId) {
+      userId = $authUserId;
+    } else if ($legacyUser && $legacyUser.id) {
+      userId = $legacyUser.id;
+    }
+  }
+  
+  // Check if we should show login page
+  $: showLogin = $router.path === '/login' || ($authStore.initialized && !$isAuthenticated && $router.path !== '/auth/callback');
+  
+  // Handle auth callback
+  $: if ($router.path === '/auth/callback') {
+    // Redirect to main app after auth callback
+    setTimeout(() => router.navigate('/'), 1000);
+  }
   
   $: currentComponent = navigationItems.find(nav => nav.id === $navigation.currentTab)?.component;
 </script>
 
-<div class="min-h-screen flex" style="background-color: var(--color-zen-50);">
-  <!-- Left Sidebar Navigation -->
-  <aside 
-    class="{isMobileNavOpen ? 'w-16' : 'w-0'} lg:w-64 min-h-screen flex flex-col transition-all duration-300 ease-in-out overflow-hidden" 
-    style="background: linear-gradient(180deg, #14B8A6, #0F766E); border-right: 1px solid rgba(255,255,255,0.1);"
-  >
+{#if $authStore.loading || $router.path === '/auth/callback'}
+  <!-- Loading Screen -->
+  <div class="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center">
+    <div class="text-center">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-teal-600 rounded-2xl mb-4">
+        <span class="text-4xl">🧠</span>
+      </div>
+      <h1 class="text-2xl font-bold text-gray-900 mb-2">ClearMind</h1>
+      <div class="flex items-center justify-center space-x-2 text-gray-600">
+        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-teal-600"></div>
+        <p>{$router.path === '/auth/callback' ? 'Signing you in...' : 'Loading...'}</p>
+      </div>
+    </div>
+  </div>
+{:else if showLogin}
+  <!-- Login Page -->
+  <Login />
+{:else}
+  <!-- Main App -->
+  <div class="min-h-screen flex" style="background-color: var(--color-zen-50);">
+    <!-- Left Sidebar Navigation -->
+    <aside 
+      class="{isMobileNavOpen ? 'w-16' : 'w-0'} lg:w-64 min-h-screen flex flex-col transition-all duration-300 ease-in-out overflow-hidden" 
+      style="background: linear-gradient(180deg, #14B8A6, #0F766E); border-right: 1px solid rgba(255,255,255,0.1);"
+    >
     <!-- Logo Section -->
     <div class="pt-0 pb-6 border-b flex justify-center" style="border-color: rgba(255,255,255,0.1);">
       <img src="/clearmind.png" alt="ClearMind Logo" class="w-12 h-12 lg:w-36 lg:h-36" />
@@ -101,17 +137,34 @@
     </nav>
     
     <!-- User Info Section -->
-    <div class="p-2 lg:p-4 border-t" style="border-color: rgba(255,255,255,0.1);">
-      <button 
-        on:click={() => navigator.clipboard.writeText(`${window.location.origin}?user=${userId}`)}
-        class="w-full flex items-center justify-center lg:justify-start lg:space-x-2 px-2 lg:px-3 py-2 rounded-lg transition-colors text-gray-300 hover:text-white hover:bg-white/10"
-        title="Copy shareable URL"
-      >
-        <span class="text-sm">📋</span>
-        {#if userId}
-          <span class="text-sm font-mono hidden lg:inline">ID: {userId.slice(0, 8)}</span>
-        {/if}
-      </button>
+    <div class="p-2 lg:p-4 border-t space-y-2" style="border-color: rgba(255,255,255,0.1);">
+      {#if $isAuthenticated}
+        <!-- Authenticated User Info -->
+        <div class="text-gray-300 text-sm lg:text-base">
+          <p class="hidden lg:block truncate">{$authStore.user?.email}</p>
+          <p class="lg:hidden text-center">👤</p>
+        </div>
+        <button 
+          on:click={() => authService.signOut()}
+          class="w-full flex items-center justify-center lg:justify-start lg:space-x-2 px-2 lg:px-3 py-2 rounded-lg transition-colors text-gray-300 hover:text-white hover:bg-white/10"
+          title="Sign Out"
+        >
+          <span class="text-sm">🚪</span>
+          <span class="text-sm hidden lg:inline">Sign Out</span>
+        </button>
+      {:else}
+        <!-- Legacy User (for backward compatibility) -->
+        <button 
+          on:click={() => navigator.clipboard.writeText(`${window.location.origin}?user=${userId}`)}
+          class="w-full flex items-center justify-center lg:justify-start lg:space-x-2 px-2 lg:px-3 py-2 rounded-lg transition-colors text-gray-300 hover:text-white hover:bg-white/10"
+          title="Copy shareable URL"
+        >
+          <span class="text-sm">📋</span>
+          {#if userId}
+            <span class="text-sm font-mono hidden lg:inline">ID: {userId.slice(0, 8)}</span>
+          {/if}
+        </button>
+      {/if}
     </div>
   </aside>
   
@@ -168,9 +221,6 @@
     </div>
   </main>
   
-  <!-- Right Chat Panel -->
-  <RightChatPanel {userId} />
-  
   <!-- Floating Action Button (All screens) -->
   {#if !$chatPanel.isOpen}
     <button
@@ -186,4 +236,8 @@
       </svg>
     </button>
   {/if}
-</div>
+  </div>
+  
+  <!-- Right Chat Panel (only show when authenticated) -->
+  <RightChatPanel {userId} />
+{/if}

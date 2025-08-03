@@ -6,7 +6,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "dev": "vite dev --port 5173",
+    "dev": "vite dev --port 5174",
     "build": "NODE_ENV=production vite build --mode production",
     "preview": "vite preview"
   },
@@ -21,6 +21,7 @@
     "vite": "4.5.2"
   },
   "dependencies": {
+    "@supabase/auth-helpers-sveltekit": "^0.13.0",
     "@supabase/supabase-js": "2.39.0",
     "fast-xml-parser": "^5.2.5",
     "marked": "^16.1.1",

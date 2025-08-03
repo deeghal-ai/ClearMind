@@ -3,11 +3,15 @@
   import { chatPanel } from '../stores/chatPanel.js';
   import { chatStore, currentContext } from '../stores/chat.js';
   import { trackerStore } from '../stores/tracker.js';
+  import { userId as authUserId, isAuthenticated } from '../stores/user.js';
   import ChatMessage from './ChatMessage.svelte';
   import QuickPrompts from './QuickPrompts.svelte';
   import { onMount } from 'svelte';
   
-  export let userId;
+  export let userId = null; // Optional prop for backward compatibility
+  
+  // Use auth user ID if available, otherwise fall back to passed userId or legacy user
+  $: effectiveUserId = $authUserId || userId;
   
   let messagesContainer;
   let isResizing = false;
@@ -52,12 +56,12 @@
   }
   
   // Handle pending context from other components
-  $: if ($chatPanel.pendingContext && $chatPanel.isOpen && userId) {
+  $: if ($chatPanel.pendingContext && $chatPanel.isOpen && effectiveUserId) {
     handlePendingContext($chatPanel.pendingContext);
   }
   
   // Initialize tracker context when panel opens directly (without pending context)
-  $: if ($chatPanel.isOpen && !$chatPanel.pendingContext && userId && !contextInitialized) {
+  $: if ($chatPanel.isOpen && !$chatPanel.pendingContext && effectiveUserId && !contextInitialized) {
     initializeTrackerContext();
   }
   
@@ -68,9 +72,9 @@
   
   async function initializeTrackerContext() {
     // Initialize tracker context - shared logic for both direct open and pending context
-    if (userId) {
+    if (effectiveUserId) {
       // Initialize tracker first
-      await trackerStore.init(userId);
+      await trackerStore.init(effectiveUserId);
       
       // Get current tracker state synchronously
       const currentState = $trackerStore;
@@ -100,11 +104,11 @@
         console.log('🔍 DEBUG RightChatPanel: Mood specifically:', trackerData.mood);
         
         // Initialize context with tracker data
-        chatStore.initContext(userId, trackerData);
+        chatStore.initContext(effectiveUserId, trackerData);
         chatStore.updateLearningState(trackerData);
       } else {
         // Fallback initialization
-        chatStore.initContext(userId, null);
+        chatStore.initContext(effectiveUserId, null);
       }
       
       // Mark context as initialized
@@ -119,7 +123,7 @@
     }
     
     // Clear any existing session to start fresh with new context
-    await chatStore.createSession(userId, context.type, context);
+    await chatStore.createSession(effectiveUserId, context.type, context);
     chatPanel.clearPendingContext();
     
     // Pre-fill the input with the prompt but don't auto-send
@@ -133,15 +137,15 @@
   }
   
   onMount(async () => {
-    if (userId) {
+    if (effectiveUserId) {
       // Initialize tracker for this user
-      await trackerStore.init(userId);
+      await trackerStore.init(effectiveUserId);
       
       // Initialize chat context with tracker data
-      chatStore.initContext(userId, null);
+      chatStore.initContext(effectiveUserId, null);
       
       // Load chat sessions
-      await chatStore.loadSessions(userId);
+      await chatStore.loadSessions(effectiveUserId);
       
       // Check for context from localStorage (backwards compatibility)
       const savedContext = localStorage.getItem('learningos_ai_context');
@@ -163,7 +167,7 @@
       
       // Subscribe to tracker updates
       const unsubscribe = trackerStore.subscribe(state => {
-        if (userId && state) {
+        if (effectiveUserId && state) {
           const trackerData = {
             mood: state.mood,
             energyLevel: state.energyLevel,
@@ -212,7 +216,7 @@
   }
   
   async function sendMessage() {
-    if (!inputValue.trim() || $chatStore.streaming || !userId) {
+    if (!inputValue.trim() || $chatStore.streaming || !effectiveUserId) {
       return;
     }
     
@@ -221,7 +225,7 @@
     showQuickPrompts = false;
     
     try {
-      await chatStore.sendMessage(message, userId);
+      await chatStore.sendMessage(message, effectiveUserId);
     } catch (error) {
       console.error('Failed to send message:', error);
     }

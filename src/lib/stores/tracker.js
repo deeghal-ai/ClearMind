@@ -1,6 +1,12 @@
 import { writable, derived } from 'svelte/store';
 import { supabase } from '../supabase.js';
 
+// Helper function to get current user ID from auth
+async function getCurrentUserId() {
+  const { data: { user } } = await supabase.auth.getUser();
+  return user?.id;
+}
+
 function createTrackerStore() {
   const { subscribe, set, update } = writable({
     loading: false,

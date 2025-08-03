@@ -3,6 +3,12 @@ import { supabase } from '../supabase.js';
 import { openaiChat } from '../openai.js';
 import { ContextProvider } from '../contextProvider.js';
 
+// Helper function to get current user ID from auth
+async function getCurrentUserId() {
+  const { data: { user } } = await supabase.auth.getUser();
+  return user?.id;
+}
+
 function createChatStore() {
   const { subscribe, set, update } = writable({
     sessions: [],
