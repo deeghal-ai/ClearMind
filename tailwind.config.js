@@ -1,7 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  // ULTIMATE NUCLEAR: Include everything by using wildcard patterns
-  content: ["./src/**", "./index.html", "./**/*.{html,js,svelte,ts}"],
+  // FIXED: Explicit content paths for Vercel production builds
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,svelte,html}",
+    "./src/**/*.svelte",
+    "./src/**/*.js",
+    "./src/**/*.ts",
+    "./src/**/*.html"
+  ],
   safelist: [
     // CRITICAL LAYOUT CLASSES - Missing these breaks the entire UI
     'min-h-screen', 'flex', 'flex-col', 'w-16', 'w-64', 'w-0', 'lg:w-64', 'h-12', 'h-36', 'lg:h-36',
