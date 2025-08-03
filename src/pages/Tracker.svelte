@@ -232,6 +232,27 @@
 
     <!-- Main Content Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Mobile: Mood & Energy Section (shown first on mobile, moved to right on desktop) -->
+      <div class="lg:hidden">
+        <!-- Mood & Energy Tracker -->
+        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm mb-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+            <span class="text-xl">😊</span>
+            How are you doing?
+          </h3>
+          <MoodEnergyTracker
+            mood={$trackerStore.mood}
+            energyLevel={$trackerStore.energyLevel}
+            learningMinutes={$trackerStore.learningMinutes}
+            focusSessions={$trackerStore.focusSessions}
+            loading={$trackerStore.loading}
+            on:updateMood={handleUpdateMood}
+            on:addFocusSession={handleAddFocusSession}
+            on:addLearningTime={handleAddLearningTime}
+          />
+        </div>
+      </div>
+      
       <!-- Left Column - Goals & Progress -->
       <div class="lg:col-span-2 space-y-6">
         <!-- Goals Section -->
@@ -327,8 +348,8 @@
         </div>
       </div>
 
-      <!-- Right Column - Mood & Energy -->
-      <div class="space-y-6">
+      <!-- Right Column - Mood & Energy (Desktop only) -->
+      <div class="hidden lg:block space-y-6">
         <!-- Mood & Energy Tracker -->
         <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
           <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
@@ -345,6 +366,45 @@
             on:addFocusSession={handleAddFocusSession}
             on:addLearningTime={handleAddLearningTime}
           />
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile: Daily Reflection Section (shown last on mobile only) -->
+    <div class="lg:hidden mt-6">
+      <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+          <span class="text-xl">💭</span>
+          Daily Reflection
+        </h3>
+        
+        <div class="space-y-4">
+          <div>
+            <label for="mobile-key-learning" class="block text-sm font-medium text-gray-700 mb-2">
+              Key Learning Today
+            </label>
+            <input
+              id="mobile-key-learning"
+              bind:value={keyLearning}
+              on:input={handleReflectionChange}
+              placeholder="What's the most important thing you learned today?"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            />
+          </div>
+          
+          <div>
+            <label for="mobile-reflection" class="block text-sm font-medium text-gray-700 mb-2">
+              Reflection
+            </label>
+            <textarea
+              id="mobile-reflection"
+              bind:value={reflection}
+              on:input={handleReflectionChange}
+              placeholder="How did today go? What challenges did you face? What would you do differently?"
+              rows="4"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>

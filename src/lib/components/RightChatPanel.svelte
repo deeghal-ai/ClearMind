@@ -259,13 +259,13 @@
 
 <!-- Chat Panel -->
 <aside
-  class="fixed right-0 top-0 h-full z-50 flex"
-  style="width: {$chatPanel.width}px; transform: translateX({$chatPanel.isOpen ? 0 : $chatPanel.width}px)"
-  transition:fly={{ x: $chatPanel.width, duration: 300 }}
+  class="fixed right-0 top-0 h-full z-50 flex w-full lg:w-auto"
+  style="{$chatPanel.isOpen ? '' : 'transform: translateX(100%);'} {typeof window !== 'undefined' && window.innerWidth >= 1024 ? `width: ${$chatPanel.width}px;` : 'width: 100%;'}"
+  transition:fly={{ x: typeof window !== 'undefined' && window.innerWidth >= 1024 ? $chatPanel.width : window?.innerWidth || 400, duration: 300 }}
 >
   <!-- Resize Handle -->
   <div
-    class="absolute left-0 top-0 w-1 h-full cursor-ew-resize hover:bg-blue-500/20 group"
+    class="absolute left-0 top-0 w-1 h-full cursor-ew-resize hover:bg-blue-500/20 group hidden lg:block"
     on:mousedown={startResize}
     role="separator"
     aria-label="Resize chat panel"
