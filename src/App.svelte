@@ -96,6 +96,33 @@
     });
   }
   
+  // CSS DEBUGGING - Check if styles are loading
+  onMount(() => {
+    console.log('🎨 CSS DEBUG - Checking styles...');
+    console.log('🎨 CSS Variables:', {
+      colorZen50: getComputedStyle(document.documentElement).getPropertyValue('--color-zen-50'),
+      sagePrimary: getComputedStyle(document.documentElement).getPropertyValue('--sage-primary'),
+      bodyStyles: getComputedStyle(document.body),
+      tailwindTest: getComputedStyle(document.body).getPropertyValue('--tw-bg-opacity')
+    });
+    
+    // Check if CSS file is loaded
+    const cssLinks = Array.from(document.querySelectorAll('link[rel="stylesheet"]'));
+    console.log('🎨 CSS Files loaded:', cssLinks.map(link => link.href));
+    
+    // Test if basic Tailwind classes work
+    const testDiv = document.createElement('div');
+    testDiv.className = 'min-h-screen bg-teal-500 hidden';
+    document.body.appendChild(testDiv);
+    const testStyles = getComputedStyle(testDiv);
+    console.log('🎨 Tailwind Test:', {
+      minHeight: testStyles.minHeight,
+      backgroundColor: testStyles.backgroundColor,
+      display: testStyles.display
+    });
+    document.body.removeChild(testDiv);
+  });
+  
   
   $: currentComponent = navigationItems.find(nav => nav.id === $navigation.currentTab)?.component;
 </script>
