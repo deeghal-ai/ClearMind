@@ -8,7 +8,7 @@
   import { chatPanel } from './lib/stores/chatPanel.js';
   
   let userId = '';
-  let isMobileNavOpen = false;
+  let isMobileNavOpen = true; // Default to open (showing thin navbar)
   
   // Remove Chat from navigation items
   const navigationItems = [
@@ -38,8 +38,7 @@
   // Handle navigation item click on mobile
   function handleNavClick(itemId) {
     navigation.setTab(itemId);
-    // Close mobile nav after selection
-    isMobileNavOpen = false;
+    // Don't auto-close on mobile since it's just a thin sidebar
   }
   
   onMount(() => {
@@ -69,17 +68,9 @@
 </script>
 
 <div class="min-h-screen flex" style="background-color: var(--color-zen-50);">
-  <!-- Mobile Nav Overlay -->
-  {#if isMobileNavOpen}
-    <div 
-      class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-      on:click={closeMobileNav}
-    ></div>
-  {/if}
-  
   <!-- Left Sidebar Navigation -->
   <aside 
-    class="{isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 fixed lg:static top-0 left-0 w-64 min-h-screen flex flex-col transition-transform duration-300 ease-in-out z-50 lg:z-auto" 
+    class="{isMobileNavOpen ? 'w-16' : 'w-0'} lg:w-64 min-h-screen flex flex-col transition-all duration-300 ease-in-out overflow-hidden" 
     style="background: linear-gradient(180deg, #14B8A6, #0F766E); border-right: 1px solid rgba(255,255,255,0.1);"
   >
     <!-- Logo Section -->
@@ -93,7 +84,7 @@
         {#each navigationItems as item}
           <button 
             on:click={() => handleNavClick(item.id)}
-            class="w-full flex items-center justify-start space-x-3 px-4 py-3 rounded-lg transition-all duration-200 text-left group
+            class="w-full flex items-center justify-center lg:justify-start lg:space-x-3 px-2 lg:px-4 py-3 rounded-lg transition-all duration-200 text-left group
                    {$navigation.currentTab === item.id 
                      ? 'text-white shadow-lg' 
                      : 'text-gray-300 hover:text-white hover:bg-white/10'}"
@@ -103,22 +94,22 @@
             title="{item.name}"
           >
             <span class="text-xl">{item.emoji}</span>
-            <span class="font-medium">{item.name}</span>
+            <span class="font-medium hidden lg:inline">{item.name}</span>
           </button>
         {/each}
       </div>
     </nav>
     
     <!-- User Info Section -->
-    <div class="p-4 border-t" style="border-color: rgba(255,255,255,0.1);">
+    <div class="p-2 lg:p-4 border-t" style="border-color: rgba(255,255,255,0.1);">
       <button 
         on:click={() => navigator.clipboard.writeText(`${window.location.origin}?user=${userId}`)}
-        class="w-full flex items-center justify-start space-x-2 px-3 py-2 rounded-lg transition-colors text-gray-300 hover:text-white hover:bg-white/10"
+        class="w-full flex items-center justify-center lg:justify-start lg:space-x-2 px-2 lg:px-3 py-2 rounded-lg transition-colors text-gray-300 hover:text-white hover:bg-white/10"
         title="Copy shareable URL"
       >
         <span class="text-sm">📋</span>
         {#if userId}
-          <span class="text-sm font-mono">ID: {userId.slice(0, 8)}</span>
+          <span class="text-sm font-mono hidden lg:inline">ID: {userId.slice(0, 8)}</span>
         {/if}
       </button>
     </div>
@@ -130,14 +121,20 @@
     <header class="bg-gradient-to-r from-white via-gray-50/95 to-white backdrop-blur-sm border-b border-gray-300/60 px-4 lg:px-8 py-3 shadow-sm">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-4">
-          <!-- Mobile Hamburger Menu -->
+          <!-- Mobile Collapse Toggle -->
           <button 
             on:click={toggleMobileNav}
             class="lg:hidden p-2 rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
-            title="Toggle navigation"
+            title="{isMobileNavOpen ? 'Collapse' : 'Expand'} navigation"
           >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {#if isMobileNavOpen}
+                <!-- Collapse icon (left arrow) -->
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              {:else}
+                <!-- Expand icon (right arrow) -->
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              {/if}
             </svg>
           </button>
           
